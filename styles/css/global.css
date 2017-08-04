@@ -6,7 +6,9 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    background-image: url('../images/background06.jpg');
+    background-size: cover;
 }
 table {
     margin: auto;
@@ -155,5 +157,9 @@ table {
 .background-orange-h:hover {background-color: rgb(211, 84, 0);}
 .background-white {background-color: rgb(255, 255, 255);}
 .background-white-h:hover {background-color: rgb(236, 240, 241);}
-/* .background-gray {background-color: ;}
-.background-gray-h:hover {background-color: ;} */
+ .background-gray {background-color: ;}
+.background-gray-h:hover {background-color: ;} 
+
+form input {
+    display: block;
+}

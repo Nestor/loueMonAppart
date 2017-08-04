@@ -51,5 +51,8 @@ class Annonce {
     public function delete(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->deleteAnnonce($this);
     }
+    public function update(Bddmanager $BddManager) {
+        return $BddManager->getAnnonceManager()->updateAnnonce($this);
+    }
 }
 ?>
