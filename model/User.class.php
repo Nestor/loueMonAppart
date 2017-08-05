@@ -8,7 +8,6 @@ class User {
 	private $grade;
 	private $type;
 	private $dateInscription;
-    private $errors;
 
 	public function __construct($donnees=array()) {
         $this->hydrate($donnees);
@@ -61,6 +60,10 @@ class User {
     public function connect(Bddmanager $BddManager) {
         return $BddManager->getUserManager()->connectUser($this);
     }
+
+    // public function checkUserExist(Bddmanager $BddManager) {
+    //     return $BddManager->getUserManager()->checkUserExist($this);
+    // }
 
     public function selectById(Bddmanager $BddManager) {
         return $BddManager->getUserManager()->getUserById($this);

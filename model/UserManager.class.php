@@ -57,8 +57,9 @@ class UserManager {
 
     public function connectUser(User $user) {
         if($this->checkUserExist($user)) {
-            $prepare = $this->connexion->prepare('SELECT * FROM users WHERE password=:password');
+            $prepare = $this->connexion->prepare('SELECT * FROM users WHERE username=:username AND password=:password');
             $prepare->execute(array(
+                "username" => $user->getUsername(),
                 "password" => $user->getPassword()
             ));
             $result = $prepare->fetchAll(PDO::FETCH_ASSOC);

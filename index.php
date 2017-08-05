@@ -1,4 +1,6 @@
 <?php
+session_start();
+// session_destroy();
 require_once 'flight/Flight.php';
 require_once 'model/Autoloader.class.php'; // On importe la classe d'autoload
 AutoClassLoader::init('model/'); // On charge notre modules d'autoload de class

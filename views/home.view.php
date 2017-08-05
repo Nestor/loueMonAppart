@@ -1,8 +1,7 @@
 <?= $header_content ?>
-
-
 <div class="container-parent">
     <div class="container rgb(236, 240, 241)">
+
         <div class="cadre cadre-100 center background-orange">
             <h2>Accueil</h2><a href="login">Se connecter</a> | <a href="register">S'inscrire</a>
         </div>
