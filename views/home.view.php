@@ -3,7 +3,6 @@
     <div class="container rgb(236, 240, 241)">
 
         <?= $main_content ?>
-        
         <div class="cadre cadre-100 center background-white">
             <form action="#" method="post" id="search-location">
             <table>

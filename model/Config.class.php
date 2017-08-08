@@ -9,6 +9,7 @@ class Config {
     public static $SITE_NAME;
     public static $SITE_URL;
     public static $SITE_FILE;
+    public static $SECURE_SALT;
 
     public static function getURL($route=null) {
         if(!empty($route)) {

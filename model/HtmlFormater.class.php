@@ -19,14 +19,26 @@ class HTMLFormater {
         ';
     }
 
-    public function main($session=null) {
+    public function displayMain($session=null) {
+        $mainMenu = "";
         if(!empty($session)) {
-            return '
-            <li class="background-green-h"><a href="'. Config::getURL() .'">Accueil</a></li>
-            <li class="background-green-h">Bonjour '.$session['username'].'</li>
-            <li class="background-green-h"><a href="#">Se déconnecter</a></li>
-            <li class="background-green-h"><a href="'. Config::getURL('contact') .'">Nous contacter</a></li>
-        ';
+            if($session['proprietaire'] == "true") {
+                $mainMenu = '
+                <li class="background-green-h"><a href="'. Config::getURL() .'">Accueil</a></li>
+                <li class="background-green-h"><a href="'.Config::getURL('annonce/post').'">Poster une annonce</a></li>
+                <li class="background-green-h"><a href="'.Config::getURL('profil').'">Mon profil</a></li>
+                <li class="background-green-h"><a href="'. Config::getURL('logout') .'">Se déconnecter</a></li>
+                <li class="background-green-h"><a href="'. Config::getURL('contact') .'">Nous contacter</a></li>
+                ';
+            } else {
+                $mainMenu = '
+                <li class="background-green-h"><a href="'. Config::getURL() .'">Accueil</a></li>
+                <li class="background-green-h"><a href="'.Config::getURL('profil').'">Mon profil</a></li>
+                <li class="background-green-h"><a href="'. Config::getURL('logout') .'">Se déconnecter</a></li>
+                <li class="background-green-h"><a href="'. Config::getURL('contact') .'">Nous contacter</a></li>
+                ';
+            }
+            return $mainMenu;
         } else {
             return '
                 <li class="background-green-h"><a href="'. Config::getURL() .'">Accueil</a></li>
@@ -35,6 +47,15 @@ class HTMLFormater {
                 <li class="background-green-h"><a href="'. Config::getURL('contact') .'">Nous contacter</a></li>
             ';
         }
+    }
+
+    public function displayError($array = array()) {
+        if(!empty($array)) {
+            foreach($array as $error) {
+                return '<p>'.$error.'</p>';
+            }
+        }
+        return false;
     }
     
 }
