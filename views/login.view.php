@@ -1,17 +1,20 @@
 <?= $header_content ?>
 <div class="container-parent">
     <div class="container">
-        <div class="cadre cadre-100 center background-orange">
-            <h2>Se connecter</h2>
-        </div>
+        
+        <?= $main_content ?>
+
         <div class="cadre cadre-90 background-orange center">
         <?php
-            if(isset($_SESSION['user'])) {
-                var_dump($_SESSION['user']);
-            }
+            
             if(!empty($errors)) {
                 var_dump($errors);
             }
+            if(isset($_SESSION['user'])) {
+                echo 'Bonjour '.$_SESSION['user']['username'];
+                var_dump($_SESSION['user']);
+            }
+            
         ?>
         </div>
         <div class="cadre cadre-90 background-orange center">

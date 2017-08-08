@@ -9,5 +9,12 @@ class Config {
     public static $SITE_NAME;
     public static $SITE_URL;
     public static $SITE_FILE;
+
+    public static function getURL($route=null) {
+        if(!empty($route)) {
+            return self::$SITE_URL.self::$SITE_FILE.$route;
+        }
+        return self::$SITE_URL.self::$SITE_FILE;
+    }
 }
 ?>

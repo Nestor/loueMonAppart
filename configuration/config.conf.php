@@ -1,5 +1,5 @@
 <?php
-    Config::$SITE_NAME = "";
-    Config::$SITE_URL = "";
-    Config::$SITE_FILE = "";
+    Config::$SITE_NAME = "Mon site";
+    Config::$SITE_URL = "http://127.0.0.1/";
+    Config::$SITE_FILE = "airbnb/";
 ?>

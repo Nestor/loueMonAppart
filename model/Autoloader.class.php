@@ -10,23 +10,25 @@ class AutoClassLoader {
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
-                    if($file == '.') {
-                    } else if($file == '..') {
-                    } else {
+                    if($file != '.' && $file != '..') {
+                    
                         $getExtension = substr($file, strlen($file)-3, 3);
                         if($getExtension == "php") {
-                            if($file == "Autoloader.class.php") {
-                            } else {
+                            if($file != "Autoloader.class.php") {
                                 require_once($file);
                             }
                         } else {
-                            echo 'Error file '.$file.' in class\\'.$file;
+                            echo 'Error file '.$file.'<br/>';
                         }
+
                     }
                 }
                 closedir($dh);
             }
         }
+    }
+    private static function openfile($file) {
+
     }
 }
 ?>

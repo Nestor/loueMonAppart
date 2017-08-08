@@ -1,9 +1,7 @@
 <?= $header_content ?>
 <div class="container-parent">
     <div class="container">
-        <div class="cadre cadre-100 center background-orange">
-            <h2>S'inscrire</h2>
-        </div>
+        <?= $main_content ?>
         <?php
             if(!empty($errors)) {
                 echo $errors;

@@ -13,14 +13,19 @@ Flight::route('POST /connect', function(){
     $errors;
 
     if(!empty($result)) {
+        // var_dump($result);
         $_SESSION['user'] = array(
             "id" => $result->getId(),
-            "username" => $result->getUsername()
+            "username" => $result->getUsername(),
+            "grade" => $result->getGrade(),
+            "locataire" => $result->getLocataire(),
+            "proprietaire" => $result->getProprietaire()
         );
         Flight::redirect('login');
     } else {
         $errors['account'] = "Mauvais nom de compte ou mot de passe";
         Flight::render('login.view', array('errors'=>$errors));
     }
+    
 });
 ?>

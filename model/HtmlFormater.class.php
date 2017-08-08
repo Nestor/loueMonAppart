@@ -19,7 +19,23 @@ class HTMLFormater {
         ';
     }
 
-    
+    public function main($session=null) {
+        if(!empty($session)) {
+            return '
+            <li class="background-green-h"><a href="'. Config::getURL() .'">Accueil</a></li>
+            <li class="background-green-h">Bonjour '.$session['username'].'</li>
+            <li class="background-green-h"><a href="#">Se déconnecter</a></li>
+            <li class="background-green-h"><a href="'. Config::getURL('contact') .'">Nous contacter</a></li>
+        ';
+        } else {
+            return '
+                <li class="background-green-h"><a href="'. Config::getURL() .'">Accueil</a></li>
+                <li class="background-green-h"><a href="'. Config::getURL('login') .'">Se connecter</a></li>
+                <li class="background-green-h"><a href="'. Config::getURL('register') .'">S\'inscrire</a></li>
+                <li class="background-green-h"><a href="'. Config::getURL('contact') .'">Nous contacter</a></li>
+            ';
+        }
+    }
     
 }
 

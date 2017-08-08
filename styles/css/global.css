@@ -24,6 +24,24 @@ table {
     font-weight: bold; 
 }
 
+nav .main {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+
+}
+nav .main li {
+    width: auto;
+    height: auto;
+    padding: 10px 5px;
+}
+nav .main li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+}
+
 #search-location {
     padding: 10px;
 }
