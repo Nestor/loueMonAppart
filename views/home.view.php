@@ -28,7 +28,7 @@
                     $annonces = $AnnonceManager->getAnnonces();
 
                     foreach($annonces as $annonce) {
-                        echo $HTMLFormater->HTMLAnnonce($annonce->getId(), $annonce->getTitre(), 'https://a0.muscache.com/im/pictures/1a79afd1-0595-4d66-a323-7998aa16fb9e.jpg', $annonce->getPrice(), $annonce->getDescription());
+                        echo $HTMLFormater->HTMLAnnonce($annonce->getId(), $annonce->getTitre(), 'https://a0.muscache.com/im/pictures/1a79afd1-0595-4d66-a323-7998aa16fb9e.jpg', $annonce->getPrice(), $annonce->getDescription(), $annonce->getAccept());
                     }
                 ?>
             </div>

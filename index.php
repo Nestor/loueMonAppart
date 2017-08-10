@@ -11,7 +11,7 @@ AutoClassLoader::init('model/'); // On charge notre modules d'autoload de class
 Flight::register('Bddmanager', 'Bddmanager'); 
 Flight::register('HTMLFormater', 'HTMLFormater');
 Flight::register('User', 'User');
-
+Flight::register('Annonce', 'Annonce');
 // if(isset($_SESSION['user'])) {
 //     SessionManager::$USER_SESSION = $_SESSION['user'];
 //     var_dump(SessionManager::$USER_SESSION);
@@ -32,6 +32,8 @@ Flight::route('/annonce/@id', function($id){
     if(intval($id)) {
         Flight::render('annonce.view', array('id' => $id));
     }
+});
+Flight::route('/post-annonce', function(){
     Flight::render('postAnnonce.view', array());
 });
 Flight::route('/annonce', function(){
@@ -135,6 +137,37 @@ Flight::route('POST /regist', function() {
     }
 
 });
+Flight::route('POST /annoncepost', function() {
+    $request = Flight::request();
+    $errors;
 
+    // if(intval($request->data['titre'])<4) {
+    //     $errors['titre'] = "Titre pas assez long";
+    // } else if (intval($request->data['titre'])>30) {
+    //     $errors['titre'] = "Titre trop long";
+    // }
+
+    // if(intval($request->data['description']) < 5) {
+    //     $errors['description'] = "Description pas assez long";
+    // } else if(intval($request->data['description']) > 350) {
+    //     $errors['description'] = "Description trop longue";
+    // }
+
+    if(!empty($errors)) {
+        $strErrors = "";
+        foreach($errors as $error) {
+            $strErrors .= $error.'<br/>';
+        }
+        Flight::render('postAnnonce.view', array('errors'=>$strErrors));
+    }else{
+        Flight::Annonce()->setTitre($request->data['titre']);
+        Flight::Annonce()->setDescription($request->data['description']);
+        Flight::Annonce()->setDateDispo($request->data['dateDispo']);
+        Flight::Annonce()->setPlaceDispo($request->data['numberPlace']);
+        Flight::Annonce()->setIdUser($_SESSION['user']['id']);
+        Flight::Annonce()->setPrice($request->data['price']);
+        Flight::Annonce()->save(Flight::Bddmanager());
+    }    
+});
 Flight::start();
 ?>

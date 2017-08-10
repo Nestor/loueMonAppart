@@ -48,13 +48,14 @@ class AnnonceManager {
 
     /* Pour enregistrer l'annonce */
     public function saveAnnonce(Annonce $annonce) {
-        $prepare = $this->connexion->prepare('INSERT INTO annonces SET titre=:titre, description=:description, dateDispo=:dateDispo, placeDispo=:placeDispo, price=:price');
+        $prepare = $this->connexion->prepare('INSERT INTO annonces SET titre=:titre, description=:description, dateDispo=:dateDispo, placeDispo=:placeDispo, price=:price, idUser=:idUser');
         $prepare->execute(array(
             "titre" => $annonce->getTitre(),
             "description" => $annonce->getDescription(),
             "dateDispo" => $annonce->getDateDispo(),
             "placeDispo" => $annonce->getPlaceDispo(),
-            "price" => $annonce->getPrice()
+            "price" => $annonce->getPrice(),
+            "idUser" => $annonce->getIdUser()
         ));
         if($this->connexion->lastInsertId()>0) {
             return $this->connexion->lastInsertId();

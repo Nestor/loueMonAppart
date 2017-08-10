@@ -7,6 +7,8 @@ class Annonce {
 	private $dateDispo;
 	private $placeDispo;
     private $price;
+    private $idUser;
+    private $accept;
 
     public function __construct($donnees=array()) {
         $this->hydrate($donnees);
@@ -18,6 +20,9 @@ class Annonce {
 	public function getDateDispo() { return $this->dateDispo; }
 	public function getPlaceDispo() { return $this->placeDispo; }
     public function getPrice() { return $this->price; }
+    public function getIdUser() { return $this->idUser; }
+    public function getAccept() { return $this->accept; }
+
 
 	public function setId($id) { $this->id=$id; }
 	public function setTitre($titre) { $this->titre=$titre; }
@@ -25,6 +30,8 @@ class Annonce {
 	public function setDateDispo($dateDispo) { $this->dateDispo=$dateDispo; }
 	public function setPlaceDispo($placeDispo) { $this->placeDispo=$placeDispo; }
     public function setPrice($price) { $this->price=$price; }
+    public function setIdUser($id) { $this->idUser=$id; }
+    public function setAccept($bool) { $this->accept=$bool; }
 
     public function hydrate(array $donneesTableau){
        if(empty($donneesTableau) == false){

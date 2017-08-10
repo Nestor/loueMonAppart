@@ -8,19 +8,14 @@
             }
         ?>
         <div class="cadre cadre-90 background-orange center">
-            <form action="regist" method="post">
-
+            <form action="annoncepost" method="post">
                 <input type="text" name="titre" placeholder="Titre" />
                 <textarea class="cadre cadre-90" name="description" placeholder="Description"></textarea>
-
+                Date dispo: <input type="date" name="dateDispo"/>
+                Place: <input type="number" name="numberPlace" min=1 max=14>
+                Prix par nuit: <input type="number" name="price" value=30 min=1 max=300>
                 <input type="submit" value="Poster" />
 
-            </form>
-
-            <form action="upload.php" method="post" enctype="multipart/form-data">
-                Select image to upload:
-                <input type="file" name="fileToUpload" id="fileToUpload">
-                <input type="submit" value="Upload Image" name="submit">
             </form>
             
         </div>
