@@ -25,6 +25,7 @@ class HTMLFormater {
     public function displayMain($session=null) {
         $mainMenu = "";
         if(!empty($session)) {
+            
             if($session['proprietaire'] == "true") {
                 $mainMenu = '
                 <li class="background-green-h"><a href="'. Config::getURL() .'">Accueil</a></li>
@@ -41,6 +42,11 @@ class HTMLFormater {
                 <li class="background-green-h"><a href="'. Config::getURL('contact') .'">Nous contacter</a></li>
                 ';
             }
+
+            if($session['grade'] == "owner") {
+                $mainMenu .= '<li class="background-green-h"><a href="'. Config::getURL('admin') .'">Espace admin</a></li>';
+            }
+
             return $mainMenu;
         } else {
             return '

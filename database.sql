@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-08-08 13:42:34
+Date: 2017-08-13 10:44:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,15 +25,22 @@ CREATE TABLE `annonces` (
   `dateDispo` varchar(255) DEFAULT NULL,
   `placeDispo` varchar(255) DEFAULT NULL,
   `price` int(12) DEFAULT '0',
+  `idUser` varchar(255) DEFAULT NULL,
+  `accept` varchar(255) DEFAULT 'false',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of annonces
 -- ----------------------------
-INSERT INTO `annonces` VALUES ('1', 'Perpignan Parc des Expositions', 'Venez découvrir cette incroyable maison en plein Perpignan centre', '03/08/2017', '4', '50');
-INSERT INTO `annonces` VALUES ('6', 'Paris sparc des expositions', 'Venez visiter Paris est sa tour Eiffel', '04/08/2017', '4', '1000');
-INSERT INTO `annonces` VALUES ('7', 'test', 'Aucune description', '00/00/0000', '9999', '120');
+INSERT INTO `annonces` VALUES ('1', 'Perpignan Parc des Expositions', 'Venez découvrir cette incroyable maison en plein Perpignan centre', '03/08/2017', '4', '50', null, 'false');
+INSERT INTO `annonces` VALUES ('6', 'Paris sparc des expositions', 'Venez visiter Paris est sa tour Eiffel', '04/08/2017', '4', '1000', null, 'false');
+INSERT INTO `annonces` VALUES ('7', 'test', 'Aucune description', '00/00/0000', '9999', '120', null, 'false');
+INSERT INTO `annonces` VALUES ('8', 'ici pas loin', 'ici pas loin', '2017-08-10', '4', '30', null, 'false');
+INSERT INTO `annonces` VALUES ('9', 'ici pas loin', 'ici pas loin', '2017-08-10', '4', '30', null, 'false');
+INSERT INTO `annonces` VALUES ('10', 'zoukilamar', 'zoukilamar', '2017-08-10', '4', '250', null, 'false');
+INSERT INTO `annonces` VALUES ('11', 'zoukilamar', 'zoukilamar', '2017-08-10', '4', '250', '8', 'true');
+INSERT INTO `annonces` VALUES ('12', 'zoukilamar', 'zoukilamar', '2017-08-10', '4', '250', '8', 'true');
 
 -- ----------------------------
 -- Table structure for `images_url`

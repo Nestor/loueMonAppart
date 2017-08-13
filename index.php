@@ -60,6 +60,41 @@ Flight::route('/logout', function(){
 Flight::route('/contact', function(){
     Flight::render('contact.view', array());
 });
+Flight::route('/post', function(){
+    Flight::render('post.view', array());
+});
+Flight::route('POST /qzlqkk', function() {
+    $request = Flight::request();
+    echo 'Titre: '.$request->data['titre'];
+    echo 'Description: '.$request->data['Description'];
+    echo 'A partir du: '.$request->data['dateDispo'];
+    echo 'Nombre de personne: '.$request->data['numberPlace'];
+    echo 'Prix par nuit: '.$request->data['price'];
+    for($i = 1; $i <= 3; $i++) {
+        if(isset($request->files['monfichier'.$i]) && $request->files['monfichier'.$i]['error'] ==0) {
+            if($request->files['monfichier'.$i]['size'] <= 1000000) {
+
+                $infoFichier = pathinfo($request->files['monfichier'.$i]['name']);
+                $extension_upload = $infoFichier['extension'];
+                $extention_autoriser = array('jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG');
+
+                if(in_array($extension_upload, $extention_autoriser)) {
+                    move_uploaded_file($request->files['monfichier'.$i]['tmp_name'], 'uploads/'.basename($request->files['monfichier'.$i]['name']));
+                    echo '<p>le fichier '.$request->files['monfichier'.$i]['name'].' à été uploader</p>';
+                }else{
+                    echo 'l\'extension du fichier n\'est pas autoriser: '.$request->files['monfichier'.$i]['name'];
+                }
+
+            }else{
+                echo 'La taille du fichier '.$request->files['monfichier'.$i]['name'].' est trop gros';
+            }
+        } else {
+            echo 'Erreur lors du transfère';
+        }
+    }
+
+});
+
 Flight::map('notFound', function(){
     Flight::render('error404.view', array());
 });

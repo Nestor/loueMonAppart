@@ -8,6 +8,7 @@
             }
         ?>
         <div class="cadre cadre-90 background-orange center">
+        
             <form action="annoncepost" method="post">
                 <input type="text" name="titre" placeholder="Titre" />
                 <textarea class="cadre cadre-90" name="description" placeholder="Description"></textarea>
@@ -15,9 +16,8 @@
                 Place: <input type="number" name="numberPlace" min=1 max=14>
                 Prix par nuit: <input type="number" name="price" value=30 min=1 max=300>
                 <input type="submit" value="Poster" />
-
             </form>
-            
+
         </div>
     </div>
 </div>

@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
      <!-- <script type="text/javascript" src="scripts/scripts.js"></script>   -->
-    <link rel="stylesheet" type="text/css" href="http://127.0.0.1/airbnb/styles/css/reset.css" /> 
-    <link rel="stylesheet" type="text/css" href="http://127.0.0.1/airbnb/styles/css/fonts.css" />
-    <link rel="stylesheet" type="text/css" href="http://127.0.0.1/airbnb/styles/css/global.css" />
+    <link rel="stylesheet" type="text/css" href="<?= Config::getURL() ?>styles/css/reset.css" /> 
+    <link rel="stylesheet" type="text/css" href="<?= Config::getURL() ?>styles/css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="<?= Config::getURL() ?>styles/css/global.css" />
     <title><?= $title ?></title>
 </head>
 <body>
