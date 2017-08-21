@@ -14,12 +14,12 @@
             <h2>Espace admin</h2>
             <hr/>
             <h3>Annonces</h3>
-            <a href="<?= Config::getURL('admin-annonces') ?>" class="btn btn-primary">Annonces</a>
-            <a href="<?= Config::getURL('admin-annonces-v') ?>" class="btn btn-primary">Annonces à valider</a>
+            <a href="<?= Config::getURL('admin/annonces') ?>" class="btn btn-primary">Annonces</a>
+            <a href="<?= Config::getURL('admin/annonces-v') ?>" class="btn btn-primary">Annonces à valider</a>
             <hr/>
             <h3>Utilisateurs</h3>
-            <a href="<?= Config::getURL('admin-users') ?>" class="btn btn-primary">Utilisateurs</a>
-            <a href="<?= Config::getURL('admin-users-v') ?>" class="btn btn-primary">Utilisateurs à valider</a>
+            <a href="<?= Config::getURL('admin/users') ?>" class="btn btn-primary">Utilisateurs</a>
+            <a href="<?= Config::getURL('admin/users-v') ?>" class="btn btn-primary">Utilisateurs à valider</a>
         </div>
     </div>
 </div>

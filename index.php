@@ -74,12 +74,19 @@ Flight::route('/contact', function(){
 Flight::route('/admin', function(){
     if(isset($_SESSION['user'])) {
         Flight::Utils()::getAdministrator($_SESSION['user']);
-        Flight::render('admin.view', array());
+        Flight::render('admin/home.view', array());
     }else{
         Flight::Utils()::getLogged();
     }
 });
-
+Flight::route('/admin/annonces', function(){
+    if(isset($_SESSION['user'])) {
+        Flight::Utils()::getAdministrator($_SESSION['user']);
+        Flight::render('admin/annonces.view', array());
+    }else{
+        Flight::Utils()::getLogged();
+    }
+});
 Flight::map('notFound', function(){
     Flight::render('error404.view', array());
 });
