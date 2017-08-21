@@ -1,21 +1,36 @@
 <?= $header_content ?>
-<div class="container-parent">
-    <div class="container">
-        <div class="cadre cadre-100 center background-orange background-orange-h">
-            <h2>Accueil</h2>
-        </div>
-        
-        <div class="cadre cadre-100 center background-white">
 
+<div class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-md-12" style="padding: 0;">
+            <?= $main_content ?>
         </div>
-        
-        <div class="cadre cadre-90 background-orange center">
+    </div>
+    <div class="row">
+        <div class="col" style="height: auto;min-height: 300px;padding:5px;background-color: silver;">
             <h2>Logements</h2>
-            <div class="flex-annonce">
-                Vous consulter l'annonce <?= $id ?>
-            </div>
-        </div>
 
+                <?php
+                    Flight::Annonce()->setId($id);
+                    Flight::Image()->setIdAnnonce($id);
+                    $images = Flight::Image()->getByAnnonceId(Flight::Bddmanager());
+                    $annonce = Flight::Annonce()->load(Flight::Bddmanager());
+                    echo 'Titre: '.$annonce->getTitre().'<br/>';
+                    echo 'Description: '.$annonce->getDescription().'<br/>';
+                    echo 'Disponible à partir du: '.$annonce->getDateDispo().'<br/>';
+                    echo 'Place disponible: '.$annonce->getPlaceDispo().'<br/>';
+                    echo 'Prix: '.$annonce->getPrice().' par nuit<br/>';
+
+                    echo '<a href="'.Config::getURL('location/'.$id).'" class="btn btn-primary">Louer</a>';
+
+                    echo Flight::HTMLFormater()->displaySlider($images);
+                ?>          
+                            
+            </div>
+            
+
+            
+        </div>
     </div>
 </div>
 <?= $footer_content ?>

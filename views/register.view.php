@@ -1,24 +1,48 @@
 <?= $header_content ?>
-<div class="container-parent">
-    <div class="container">
-        <?= $main_content ?>
-        <?php
+
+<div class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-md-12" style="padding: 0;">
+            <?= $main_content ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="height: 50px;background-color: gray;"></div>
+    </div>
+    <div class="row">
+        <div class="col" style="height: auto;min-height: 300px;padding:5px;background-color: silver;">
+            <h2>Inscription</h2>
+            <?php
             if(!empty($errors)) {
-                echo $errors;
+                echo $errors.'<br/>';
             }
-        ?>
-        <div class="cadre cadre-90 background-orange center">
+            if(isset($_GET['etat'])) {
+                switch($_GET['etat']) {
+                    case "ok":
+                        echo 'Vous pouvez maintenant vous <a href="'.Config::getURL('login').'">connecter</a><br/>';
+                    break;
+                }
+            }
+            ?>
+            
             <form action="regist" method="post">
 
-                <input type="text" name="username" placeholder="Nom de compte" />
-                <input type="password" name="password" placeholder="Mot de passe" />
-                <input type="password" name="cpassword" placeholder="Confirmer votre mot de passe" />
-                <input type="email" name="email" placeholder="Adresse mail" />
-                <input type="radio" name="type" value="locataire" id="locataire"><label for="locataire"> Locataire</label>
-                <input type="radio" name="type" value="proprietaire" id="proprietaire"> <label for="proprietaire"> Propriétaire</label>
-                <input type="submit" value="S'inscrire" />
+            <div class="form-group">
+              <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="inputConfirmPassword" name="cpassword" placeholder="Confirm Password">
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Adress mail">
+            </div>
 
-            </form>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
         </div>
     </div>
 </div>

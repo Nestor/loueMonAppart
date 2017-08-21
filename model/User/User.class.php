@@ -6,7 +6,6 @@ class User {
 	private $password;
 	private $email;
 	private $grade;
-	private $type;
 	private $dateInscription;
     private $locataire;
     private $proprietaire;

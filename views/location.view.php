@@ -8,19 +8,10 @@
     </div>
     <div class="row">
         <div class="col" style="height: auto;min-height: 300px;padding:5px;background-color: silver;">
-            <h2>Logements</h2>
 
-
-            <div class="d-flex flex-wrap align-content-center justify-content-center">
-            <?php
-                    $AnnonceManager = $BddManager->getAnnonceManager();
-                    $annonces = $AnnonceManager->getAnnonces();
-
-                    foreach($annonces as $annonce) {
-                        echo $HTMLFormater->HTMLAnnonce($annonce);
-                    }
-            ?>  
-
+            <h2>Location</h2>
+            vous souhaiter louer l'annonce <?= $id ?>
+                            
             </div>
             
 

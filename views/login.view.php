@@ -1,29 +1,44 @@
 <?= $header_content ?>
-<div class="container-parent">
-    <div class="container">
-        
-        <?= $main_content ?>
 
-        <div class="cadre cadre-90 background-orange center">
-        <?php
+<div class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-md-12" style="padding: 0;">
+            <?= $main_content ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="height: 50px;background-color: gray;"></div>
+    </div>
+    <div class="row">
+        <div class="col" style="height: auto;min-height: 300px;padding:5px;background-color: silver;">
+            <h2>Connexion</h2>
+            <?php
             if(!empty($errors)) {
                 echo Flight::HTMLFormater()->displayError($errors);
             }
-        ?>
-        </div>
-          <?php if(!isset($_SESSION['user'])) { ?>  
-            <div class="cadre cadre-90 background-orange center">
-                <form action="connect" method="post">
-
-                    <input type="text" name="username" placeholder="Nom de compte" /><br/>
-                    <input type="password" name="password" placeholder="Mot de passe" />
-
-                    <input type="submit" value="Se connecter" />
-                </form>
+            ?>
+            <?php if(!isset($_SESSION['user'])) { ?> 
+            <form action="connect" method="post">
+            <div class="form-group">
+              <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter username">
             </div>
-         <?php } ?> 
-        
 
+            <div class="form-group">
+              <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+            </div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input">
+                Se souvenir de moi ?
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+            <?php } ?>
+
+            
+        </div>
     </div>
 </div>
 <?= $footer_content ?>

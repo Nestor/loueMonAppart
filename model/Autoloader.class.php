@@ -1,34 +1,42 @@
 <?php
 /**
- * La classe AutoClassLoader permet l'auto require des fichiers php dans le dossier cibler
+ * La classe AutoLoader permet l'auto chargement(require) des class dans le dossier cibler
+ * navigue aussi dans les sous dossier du dossier cibler (permet une meilleur organisation)
  *
  * @author Melvin Chabin <zouki.dev@gmail.com>
  * @version: 1.0
 */
-class AutoClassLoader {
-    public static function init($dir) {
-        if (is_dir($dir)) {
-            if ($dh = opendir($dir)) {
+class AutoLoader {
+    public static $displayInfo = false;
+    public static function loadDir($dirname, $mode) {
+        if (is_dir($dirname)) {
+            if ($dh = opendir($dirname)) {
                 while (($file = readdir($dh)) !== false) {
                     if($file != '.' && $file != '..') {
-                    
                         $getExtension = substr($file, strlen($file)-3, 3);
                         if($getExtension == "php") {
-                            if($file != "Autoloader.class.php") {
-                                require_once($file);
+                            if(self::$displayInfo == true) {
+                                echo $dirname.$file.' ['.$mode.']<br/>';
+                                if($mode=="require") {
+                                    require_once $dirname.'/'.$file;
+                                } else if($mode=="include") {
+                                    include_once $dirname.'/'.$file;
+                                }
+                            }
+                            if($mode=="require") {
+                                require_once $dirname.'/'.$file;
+                            } else if($mode=="include") {
+                                include_once $dirname.'/'.$file;
                             }
                         } else {
-                            echo 'Error file '.$file.'<br/>';
+                            self::loadDir($dirname.$file, $mode);
                         }
-
                     }
                 }
-                closedir($dh);
             }
+        } else {
+            echo $dirname.' is not directory<br/>';
         }
-    }
-    private static function openfile($file) {
-
     }
 }
 ?>

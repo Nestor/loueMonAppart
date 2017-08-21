@@ -1,20 +1,24 @@
 <?= $header_content ?>
-<div class="container-parent">
-    <div class="container">
-        <?= $main_content ?>
-        
-        <div class="cadre cadre-90 background-orange center">
-            <?php
-                if(empty($id)) {
-                    echo 'Votre profil<br/>';
 
-                    echo '<p>Username: '.$_SESSION['user']['username'].'</p>';
-                    echo '<p>Grade: '.$_SESSION['user']['grade'].'</p>';
-                    echo '<p>Locataire: '.$_SESSION['user']['locataire'].'</p>';
-                    echo '<p>Propriétaire: '.$_SESSION['user']['proprietaire'].'</p>';
-                } else {
-                    echo 'Vous visiter le profil '.$id;
-                }
+<div class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-md-12" style="padding: 0;">
+            <?= $main_content ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="height: auto;min-height: 300px;padding:5px;background-color: silver;">
+            <h2>Profil</h2>
+            <?php
+            if(isset($_SESSION['user'])) {
+                $session = unserialize($_SESSION['user']);
+                echo 'Votre profil<br/>';
+
+                echo '<p>Username: '.$session->getUsername().'</p>';
+                echo '<p>Grade: '.$session->getGrade().'</p>';
+                echo '<p>Locataire: '.$session->getLocataire().'</p>';
+                echo '<p>Propriétaire: '.$session->getProprietaire().'</p>';
+            }
             ?>
         </div>
     </div>

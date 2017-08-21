@@ -52,6 +52,10 @@ class Annonce {
         }
     }
 
+
+    public function load(Bddmanager $BddManager) {
+        return $BddManager->getAnnonceManager()->getAnnonceById($this);
+    }
     public function save(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->saveAnnonce($this);
     }

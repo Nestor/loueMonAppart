@@ -21,10 +21,10 @@ class AnnonceManager {
     }
 
     /* Pour sélectionner qu'une annonce */
-    public function getAnnonceById($id) {
+    public function getAnnonceById(Annonce $annonce) {
         $prepare = $this->connexion->prepare('SELECT * FROM annonces WHERE id=:id');
         $prepare->execute(array(
-            "id" => $id
+            "id" => $annonce->getId()
         ));
         $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
         if(!empty($result)) {

@@ -1,6 +1,7 @@
 Final Round
 
 Pour ce dernier exercice vous devrez faire une plateforme de location d’appartement (pour une durée temporaire).
+
 INTRO : Les utilisateurs non inscrit pourront surfer sur des annonces d’offre de locations d’appartement pour une durée déterminée. Ils pourront également louer l’appartement si il est dispo. En cliquant sur ces annonces nous pourrons voir le détail de celles-ci avec 3 photos. Avec un titre, une description, le nom de l’utilisateur qui l’a créé.
 1) Commencez par tous créer un dossier loueMonAppart et un repo sur github.com pour que je puisse faire mes revues avec Pierre (je ferai la première), appelez-le loueMonAppart. Essayez de garder le tout sur la branche principal master, vous pouvez évidemment faire des tests dans d’autres branches.
 2) Pour cet exercice vous allez utiliser notre schéma MVC (model view controller) en prenant comme contrôleur le framework Flight (ET NON NOTRE ANCIEN INDEX AVEC LE SWITCH).
@@ -21,3 +22,4 @@ Je vous conseille de commencer à programmer de façon incrémentale. Ne créez 
 GIT
 git remote add origin https://github.com/zoukilama/loueMonAppart.git
 git push -u origin master
+

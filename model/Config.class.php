@@ -10,6 +10,10 @@ class Config {
     public static $SITE_URL;
     public static $SITE_FILE;
     public static $SECURE_SALT;
+    
+    public static $NOT_LOGGED_REDIRECT;
+    public static $NOT_ADMIN_REDIRECT;
+    public static $NOT_PROPRIO_REDIRECT;
 
     public static function getURL($route=null) {
         if(!empty($route)) {

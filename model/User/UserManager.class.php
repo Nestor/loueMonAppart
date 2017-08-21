@@ -10,7 +10,7 @@ class UserManager {
     public function saveUser(User $user) {
         if($this->checkUserExist($user)==false) {
             date_default_timezone_set("Europe/Paris"); 
-            $prepare = $this->connexion->prepare('INSERT INTO users SET username=:username, password=:password, email=:email, grade=:grade, type=:type, dateInscription=:dateInscription');
+            $prepare = $this->connexion->prepare('INSERT INTO users SET username=:username, password=:password, email=:email, grade=:grade, dateInscription=:dateInscription, proprietaire=:proprietaire');
             $SALT = "353d196605b2bb5890bfb1b3aa0c3cccfdddd30b";
             $date = date('d/m/Y à G:i');
             $prepare->execute(array(
@@ -18,8 +18,8 @@ class UserManager {
                 "password" => $SALT.sha1($user->getPassword()),
                 "email" => $user->getEmail(),
                 "grade" => $user->getGrade(),
-                "type" => $user->getType(),
-                "dateInscription" => $date
+                "dateInscription" => $date,
+                "proprietaire" => "false"
             ));
             if($this->connexion->lastInsertId()>0) {
                 return $this->connexion->lastInsertId();
@@ -29,14 +29,14 @@ class UserManager {
     }
 
     public function updateUser(User $user) {
-        $prepare = $this->connexion->prepare('UPDATE users SET username=:username, password=:password, email=:email, grade=:grade, type=:type WHERE id=:id');
+        $prepare = $this->connexion->prepare('UPDATE users SET username=:username, password=:password, email=:email, grade=:grade, proprietaire=:proprietaire  WHERE id=:id');
         $prepare->execute(array(
             "username" => $user->getUsername(),
             "password" => $user->getPassword(),
             "email" => $user->getEmail(),
             "grade" => $user->getGrade(),
-            "type" => $user->getType(),
-            "id" => $user->getId()
+            "id" => $user->getId(),
+            "proprietaire" => $user->getProprietaire()
         ));
         if($prepare->rowCount()>0) {
             return $prepare->rowCount();
