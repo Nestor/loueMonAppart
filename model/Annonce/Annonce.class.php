@@ -9,6 +9,7 @@ class Annonce {
     private $price;
     private $idUser;
     private $accept;
+    private $datePosted;
 
     public function __construct($donnees=array()) {
         $this->hydrate($donnees);
@@ -22,6 +23,7 @@ class Annonce {
     public function getPrice() { return $this->price; }
     public function getIdUser() { return $this->idUser; }
     public function getAccept() { return $this->accept; }
+    public function getDatePosted() { return $this->datePosted; }
 
 
 	public function setId($id) { $this->id=$id; }
@@ -32,6 +34,7 @@ class Annonce {
     public function setPrice($price) { $this->price=$price; }
     public function setIdUser($id) { $this->idUser=$id; }
     public function setAccept($bool) { $this->accept=$bool; }
+    public function setDatePosted($date) { $this->datePosted=$date; }
 
     public function hydrate(array $donneesTableau){
        if(empty($donneesTableau) == false){
@@ -55,6 +58,9 @@ class Annonce {
 
     public function load(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->getAnnonceById($this);
+    }
+    public function loadAll(Bddmanager $BddManager) {
+        return $BddManager->getAnnonceManager()->getAnnonces();
     }
     public function save(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->saveAnnonce($this);

@@ -11,11 +11,11 @@
     </div>
     <div class="row">
         <div class="col" style="height: auto;min-height: 300px;padding:5px;background-color: silver;">
-            <h2>Liste des annonces</h2>
+            <h2>Liste des annonces à valider</h2>
             <?php
                 if(!empty($annonces)) {
                     foreach($annonces as $annonce) {
-                        if($annonce->getAccept() == "true") {
+                        if($annonce->getAccept() == "false") {
                             echo '<a href="'.Config::getURL('admin/annonce/'.$annonce->getId()).'">'.$annonce->getTitre().' | '.$annonce->getDatePosted().'</a><br/>';
                         }
                     }

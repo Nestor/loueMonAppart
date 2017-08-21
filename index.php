@@ -82,11 +82,34 @@ Flight::route('/admin', function(){
 Flight::route('/admin/annonces', function(){
     if(isset($_SESSION['user'])) {
         Flight::Utils()::getAdministrator($_SESSION['user']);
-        Flight::render('admin/annonces.view', array());
+        Flight::render('admin/annonces.view', array(
+            "annonces" => Flight::Annonce()->loadAll(Flight::Bddmanager())
+        ));
     }else{
         Flight::Utils()::getLogged();
     }
 });
+Flight::route('/admin/annonces-v', function(){
+    if(isset($_SESSION['user'])) {
+        Flight::Utils()::getAdministrator($_SESSION['user']);
+        Flight::render('admin/annonces-v.view', array(
+            "annonces" => Flight::Annonce()->loadAll(Flight::Bddmanager())
+        ));
+    }else{
+        Flight::Utils()::getLogged();
+    }
+});
+Flight::route('/admin/annonce/@id', function($id){
+    if(isset($_SESSION['user'])) {
+        Flight::Utils()::getAdministrator($_SESSION['user']);
+        $annonce = Flight::Annonce()->setId($id);
+        $annonce = Flight::Annonce()->load(Flight::Bddmanager());
+        Flight::render('admin/annonce.view', array("annonce"=>$annonce));
+    }else{
+        Flight::Utils()::getLogged();
+    }
+});
+
 Flight::map('notFound', function(){
     Flight::render('error404.view', array());
 });
@@ -230,14 +253,17 @@ Flight::route('POST /annoncepost', function() {
         Flight::Annonce()->setPlaceDispo($request->data['numberPlace']);
         Flight::Annonce()->setIdUser(unserialize($_SESSION['user'])->getId());
         Flight::Annonce()->setPrice($request->data['price']);
+        $date=date('Y-m-d');
+        Flight::Annonce()->setDatePosted($date);
         $annonceId = Flight::Annonce()->save(Flight::Bddmanager());
         
         foreach($dataImage as $image) {
             Flight::Image()->setIdAnnonce($annonceId);
             Flight::Image()->setLinkImage($image);
-            // var_dump(Flight::Image()->save(Flight::Bddmanager()));
-            echo '<img src="'.$image.'" alt="image" style="width: 200px;height: 250px;" /><br/>';
+            Flight::Image()->save(Flight::Bddmanager());
         }
+
+        Flight::redirect(Config::getURL('?etat=ok'));
     }
 
 });

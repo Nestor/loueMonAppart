@@ -7,7 +7,17 @@
         </div>
     </div>
     <div class="row">
-        <div class="col" style="height: 50px;background-color: gray;"></div>
+        <div class="col" style="height: 50px;background-color: gray;">test
+            <?php
+                if(isset($_GET['etat'])) {
+                    switch($_GET['etat']) {
+                        case "ok":
+                            echo '<p>Votre annonce à était poster veuillez patienter pendant qu\'un membre du staff valide votre annonce</p>';
+                        break;
+                    }
+                }
+            ?>
+        </div>
     </div>
     <div class="row">
         <div class="col" style="height: auto;min-height: 300px;padding:5px;background-color: silver;">
