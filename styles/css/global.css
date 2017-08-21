@@ -1,183 +1,23 @@
 body {
-    font-family: 'Roboto';
-}
-.container-parent {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('../images/background06.jpg');
+    /* background-color: rgba(236, 240, 241,1.0); */
+    background-image: url('https://wallpaperscraft.com/image/city_night_cathedral_sky_view_from_top_russia_moscow_47874_1920x1080.jpg');
     background-size: cover;
 }
-table {
-    margin: auto;
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
-.container-parent .container {
-    width: 60%;
+.containerParent {
     height: auto;
-    min-height: 50vh;
-    background-color: gray;
-}
-.container-parent .container h2 {
-    font-size: 22px;
-    font-weight: bold; 
-}
-
-nav .main {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-
-}
-nav .main li {
-    width: auto;
-    height: auto;
-    padding: 10px 5px;
-}
-nav .main li a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 20px;
-}
-
-#search-location {
-    padding: 10px;
-}
-#search-location table tr td {
-    padding: 2px 5px;
-}
-
-#search-location input {
-    display: inline-block;
-    width: auto;
-    height: auto;
-    border: none;
-    padding: 5px 10px;
-    border: 1px solid rgb(230, 126, 34);
-}
-#search-location input::-webkit-input-placeholder {
-    color: rgb(230, 126, 34);
-}
-#search-location input[type="text"] {
-    padding: 7.5px 10px;
-}
-#search-location input[type="submit"] {
-    background-color: rgba(231, 76, 60,1.0);
-    color: #fff;
-    border-radius: 4px;
-    padding: 8px 10px;
-    font-size: 18px;
-    cursor: pointer;
-}
-#search-location input[type="submit"]:hover {
-    background-color: rgba(230, 126, 34,1.0);
-}
-.container-parent .container .cadre {
+    padding:5px;
+    background-color: #fff;
+    min-height: 70vh;
     height: auto;
 }
-.container-parent .container .cadre h2 {
-    padding: 5px 10px;
+.mainmenu {
+    padding: 0;
 }
-.container-parent .container .cadre-100 {
-    width: 100%;
-}
-.container-parent .container .cadre-90 {
-    width: 90%;
-}
-.container-parent .container .cadre-80{
-    width: 80%;
-}
-.container-parent .container .cadre-70{
-    width: 70%;
-}
-.container-parent .container .cadre-60{
-    width: 60%;
-}
-.container-parent .container .cadre-50{
-    width: 50%;
-}
-.container-parent .container .cadre-40{
-    width: 40%;
-}
-.container-parent .container .cadre-30{
-    width: 30%;
-}
-.container-parent .container .cadre-20{
-    width: 20%;
-}
-.container-parent .container .cadre-10{
-    width: 10%;
-}
-.container-parent .container .cadre-5{
-    width: 5%;
-}
-
-.flex-annonce {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-.flex-annonce a {
-    text-decoration: none;
-    color: #000;
-}
-.center {
-    margin: auto;
-}
-
-.annonce {
-    width: 30%;
+.elem {
+    width: 350px;
     height: auto;
-    min-height: 40vh;
-    max-height: 40vh;
-    margin: 10px;
-}
-.annonce header {
-    width: 100%;
-    height: 25vh;
-    overflow: hidden;
-}
-.annonce header img {
-    width: 100%;
-    height: 40vh;
-}
-.annonce main {
-    width: 100%;
-    height: auto;
-    min-height: 10vh;
-    max-height: 10vh;
-}
-.annonce main p {
-    padding: 5px;
-}
-.annonce main .price {
-    font-family: 'RobotoBold';
-     font-weight: bold; 
-}
-.annonce main .price .euro:after {
-    content:" € ";
-}
-.annonce main .price .dollar:after {
-    content:" $ ";
-}
-.background-blue {background-color: rgb(33, 150, 243);}
-.background-blue-h:hover {background-color: rgb(41, 128, 185);}
-.background-green {background-color: rgb(46, 204, 113);}
-.background-green-h:hover {background-color: rgb(39, 174, 96);}
-.background-red {background-color: rgb(231, 76, 60);}
-.background-red-h:hover {background-color: rgb(192, 57, 43);}
-.background-cyan {background-color: rgb(0, 188, 212);}
-.background-cyan-h:hover {background-color: rgb(33, 150, 243);}
-.background-orange {background-color: rgb(230, 126, 34);}
-.background-orange-h:hover {background-color: rgb(211, 84, 0);}
-.background-white {background-color: rgb(255, 255, 255);}
-.background-white-h:hover {background-color: rgb(236, 240, 241);}
- .background-gray {background-color: ;}
-.background-gray-h:hover {background-color: ;} 
-
-form input {
-    display: block;
 }

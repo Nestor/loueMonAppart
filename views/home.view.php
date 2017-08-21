@@ -1,26 +1,26 @@
 <?= $header_content ?>
-
-<div class="container" style="margin-top: 100px;">
+<div class="container">
     <div class="row">
-        <div class="col-md-12" style="padding: 0;">
+        <div class="col-md-12 mainmenu">
             <?= $main_content ?>
         </div>
     </div>
-    <div class="row">
-        <div class="col" style="height: auto;min-height: 300px;padding:5px;background-color: silver;">
+    <div class="row containerParent">
+        <div class="col">
             <h2>Logements</h2>
 
 
             <div class="d-flex flex-wrap align-content-center justify-content-center">
             <?php
-                    $AnnonceManager = $BddManager->getAnnonceManager();
-                    $annonces = $AnnonceManager->getAnnonces();
-
-                    foreach($annonces as $annonce) {
-                        echo $HTMLFormater->HTMLAnnonce($annonce);
-                    }
-            ?>  
-
+                $AnnonceManager = $Bddmanager->getAnnonceManager();
+                $annonces = $AnnonceManager->getAnnonces();
+                foreach($annonces as $annonce) {
+                    Flight::Annonce()->setId($annonce->getId());
+                    Flight::Image()->setIdAnnonce($annonce->getId());
+                    $images = Flight::Image()->getByAnnonceId($Bddmanager);
+                    echo $HTMLFormater->HTMLAnnonce($annonce, $images);
+                }
+            ?>
             </div>
             
 

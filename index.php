@@ -1,10 +1,11 @@
 <?php
 session_start();
 require_once 'flight/Flight.php';
+
 require_once 'model/Autoloader.class.php'; // On importe la classe d'autoload
 require_once 'model/Config.class.php'; // On importe la classe d'autoload
 
-// AutoLoader::$displayInfo = true;
+AutoLoader::$displayInfo = false;
 AutoLoader::loadDir('configuration/', 'include');
 AutoLoader::loadDir('model/', 'require'); // On charge notre modules d'autoload de class (static)
 
@@ -25,10 +26,7 @@ Flight::render('include/footer.inc', array(), 'footer_content');
 
 /*      ROUTING        */
 Flight::route('/', function(){
-    Flight::render('home.view', array(
-        'HTMLFormater' => Flight::HTMLFormater(),
-        'BddManager' => Flight::Bddmanager()
-    ));
+    Flight::render('home.view', array("Bddmanager"=>Flight::Bddmanager()));
 });
 Flight::route('/post-annonce', function(){
 

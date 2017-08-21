@@ -1,32 +1,20 @@
 <?php
 
 class HTMLFormater {
-    public function HTMLAnnonce(Annonce $annonce) {
+    public function HTMLAnnonce(Annonce $annonce, $images) {
         if($annonce->getAccept() == "true") {
-            $image = "http://127.0.0.1:8888/airbnb/uploads/Capture.PNG";
-            // return '
-            //     <a href="annonce/'.$annonce->getId().'">
-            //     <div class="annonce">
-            //         <header>
-            //             <img src="'.$image.'" class="img-fluid img-thumbnail" alt="appart_img" draggable="false" />
-            //         </header>
-            //         <main class="background-white">
-            //             <p>
-            //                 <span class="price"><span class="euro">'.$annonce->getPrice().'</span> par nuit</span>, '.substr($annonce->getDescription(), 0, 100).' ...<br/>
-            //                 <a href="#">0 Avis et 0 Commentaires</a>
-            //             </p>
-            //         </main>
-            //     </div>
-            //     </a>
-            // ';
-            echo '<div class="col-md-3" style="height: 200px;margin:5px;">
-                <a href="annonce/'.$annonce->getId().'"><div class="col-md-12" style="height:100%;width:100%;background-color: gray;">
-                '.$annonce->getTitre().'<br/>
-                '.substr($annonce->getDescription(), 0, 100).'<br/>
-                '.$annonce->getPrice().'
-                </div></a>
+            // echo '<div class="elem" style="height: 250px;margin:5px;background-image:url('.$images[0]->getLinkImage().');background-size:cover;border:1px solid gray;">
+            //     <h3>'.$annonce->getTitre().'</h3>
+            //     <p style="width:90%;padding:5px 10px;background-color: rgba(255,255,255,0.5);border-radius:4px;margin:auto;">
+            //         '.substr($annonce->getDescription(), 0, 110).'
+            //     </p>
+            //     <a href="'.Config::getURL('annonce/'.$annonce->getId()).'">Lire plus</a>
+            // </div>';
+            echo '<div class="elem" style="height: 250px;margin:5px;background-image:url('.$images[0]->getLinkImage().');background-size:cover;border:1px solid gray;">
+                <div class="col" style="width:100%;height:auto;min-height:10%;background-color:rgba(255,255,255,0.5);">'.$annonce->getTitre().'</div>
+                <div class="col" style="width:100%;height:auto;min-height:80%;font-size:16px;font-weight: bold;">'.substr($annonce->getDescription(), 0, 200).'</div>
+                <div class="col" style="width:100%;height:auto;min-height:10%;background-color:rgba(255,255,255,0.5);"><a href="'.Config::getURL('annonce/'.$annonce->getId()).'">Lire plus</a></div>
             </div>';
-
         }
         return false;
     }
