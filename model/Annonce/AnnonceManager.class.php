@@ -80,6 +80,29 @@ class AnnonceManager {
         }
         return false; 
     }
+
+    public function countAnnoncesValidated() {
+        $prepare = $this->connexion->prepare('SELECT * FROM annonces WHERE accept=:accept');
+        $prepare->execute(array(
+            "accept" => "true"
+        ));
+        $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        if(!empty($result)) {
+            return count($result);
+        }
+        return "0";
+    }
+    public function countAnnoncesNotValidated() {
+        $prepare = $this->connexion->prepare('SELECT * FROM annonces WHERE accept=:accept');
+        $prepare->execute(array(
+            "accept" => "false"
+        ));
+        $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        if(!empty($result)) {
+            return count($result);
+        }
+        return "0";
+    }
 }
 
 ?>

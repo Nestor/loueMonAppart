@@ -87,6 +87,28 @@ Flight::route('/admin/annonces', function(){
         Flight::Utils()::getLogged();
     }
 });
+Flight::route('/admin/annonce/delete/@id', function($id){
+    if(isset($_SESSION['user'])) {
+        Flight::Utils()::getAdministrator($_SESSION['user']);
+        $annonce = Flight::Annonce();
+        $annonce->setId($id);
+        $annonce->delete(Flight::Bddmanager());
+        Flight::redirect(Config::getURL('admin/annonces?etat=annonceDelete'));
+    }else{
+        Flight::Utils()::getLogged();
+    }
+});
+Flight::route('/admin/annonce/edit/@id', function($id){
+    if(isset($_SESSION['user'])) {
+        Flight::Utils()::getAdministrator($_SESSION['user']);
+        Flight::render('admin/annonce-e.view', array(
+            "id" => $id,
+            "annonce" => Flight::Annonce()
+        ));
+    }else{
+        Flight::Utils()::getLogged();
+    }
+});
 Flight::route('/admin/annonces-v', function(){
     if(isset($_SESSION['user'])) {
         Flight::Utils()::getAdministrator($_SESSION['user']);
@@ -103,6 +125,26 @@ Flight::route('/admin/annonce/@id', function($id){
         $annonce = Flight::Annonce()->setId($id);
         $annonce = Flight::Annonce()->load(Flight::Bddmanager());
         Flight::render('admin/annonce.view', array("annonce"=>$annonce));
+    }else{
+        Flight::Utils()::getLogged();
+    }
+});
+Flight::route('/admin/users', function(){
+    if(isset($_SESSION['user'])) {
+        Flight::Utils()::getAdministrator($_SESSION['user']);
+        Flight::render('admin/users.view', array(
+            "users" => Flight::User()->loadAll(Flight::Bddmanager())
+        ));
+    }else{
+        Flight::Utils()::getLogged();
+    }
+});
+Flight::route('/admin/users-v', function(){
+    if(isset($_SESSION['user'])) {
+        Flight::Utils()::getAdministrator($_SESSION['user']);
+        Flight::render('admin/users-v.view', array(
+            "users" => Flight::User()->loadAll(Flight::Bddmanager())
+        ));
     }else{
         Flight::Utils()::getLogged();
     }
@@ -167,11 +209,7 @@ Flight::route('POST /regist', function() {
     }
 
     if(!empty($errors)) {
-        $strErrors = "";
-        foreach($errors as $error) {
-            $strErrors .= $error.'<br/>';
-        }
-        Flight::render('register.view', array('errors'=>$strErrors));
+        Flight::render('register.view', array('errors'=>$errors));
     }else{
         Flight::User()->setUsername($request->data['username']);
         Flight::User()->setPassword($request->data['password']);

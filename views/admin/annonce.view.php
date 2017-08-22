@@ -7,27 +7,37 @@
         </div>
     </div>
     <div class="row">
-        <div class="col" style="height: 50px;background-color: gray;"></div>
-    </div>
-    <div class="row">
         <div class="col containerParent">
-            
-            <?php
-                if(!empty($annonce)) {
-                    // var_dump($annonce);
-                    echo '<h2>Annonce id: '.$annonce->getId().'</h2>';
-                    echo '<p><b>Titre:</b> '.$annonce->getTitre().'</p>';
-                    echo '<p><b>Description:</b> '.$annonce->getDescription().'</p>';
-                    echo '<p><b>Place:</b> '.$annonce->getPlaceDispo().'</p>';
-                    echo '<p><b>Prix:</b> '.$annonce->getPrice().'&euro; / par nuit</p>';
+        <?php if(!empty($annonce)) { ?>
+            <div class="jumbotron">
+                <h2 class="display-3"><?= $annonce->getTitre() ?></h2>
+                <p class="lead"><?= $annonce->getDescription() ?></p>
+                <div class="row">
 
-                    if($annonce->getAccept() == "false") {
-                        echo '<a href="#" class="btn btn-primary">Accepter</a>';
-                        echo '<a href="#" class="btn btn-danger">Refuser</a>';
-                    }
-                }
-                
-            ?>
+                <div class="col">
+                    <div class="card" style="width: 20rem;">
+                        <ul class="list-group list-group-flush"><li class="list-group-item"><?= $annonce->getPrice() ?>&euro; <i class="fa fa-money" aria-hidden="true"></i> par nuit</li></ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width: 20rem;">
+                        <ul class="list-group list-group-flush"><li class="list-group-item"><?= $annonce->getPlaceDispo() ?> <i class="fa fa-user" aria-hidden="true"></i> places</li></ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width: 20rem;">
+                        <ul class="list-group list-group-flush"><li class="list-group-item">Poster par <?= $annonce->getIdUser() ?></li></ul>
+                    </div>
+                </div>
+            </div><br/>
+            
+            <?php 
+            Flight::Image()->setIdAnnonce($annonce->getId());
+            $images = Flight::Image()->getByAnnonceId(Flight::Bddmanager());
+            echo Flight::HTMLFormater()->displaySlider($images);
+            } ?>
         </div>
     </div>
 </div>

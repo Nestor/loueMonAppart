@@ -10,7 +10,7 @@ class UserManager {
     public function saveUser(User $user) {
         if($this->checkUserExist($user)==false) {
             date_default_timezone_set("Europe/Paris"); 
-            $prepare = $this->connexion->prepare('INSERT INTO users SET username=:username, password=:password, email=:email, grade=:grade, dateInscription=:dateInscription, proprietaire=:proprietaire');
+            $prepare = $this->connexion->prepare('INSERT INTO users SET username=:username, password=:password, email=:email, grade=:grade, dateInscription=:dateInscription, proprietaire=:proprietaire, demandeProprietaire=:demandeProprietaire');
             $SALT = "353d196605b2bb5890bfb1b3aa0c3cccfdddd30b";
             $date = date('d/m/Y à G:i');
             $prepare->execute(array(
@@ -19,7 +19,8 @@ class UserManager {
                 "email" => $user->getEmail(),
                 "grade" => $user->getGrade(),
                 "dateInscription" => $date,
-                "proprietaire" => "false"
+                "proprietaire" => "false",
+                "demandeProprietaire" => "false"
             ));
             if($this->connexion->lastInsertId()>0) {
                 return $this->connexion->lastInsertId();
@@ -29,14 +30,15 @@ class UserManager {
     }
 
     public function updateUser(User $user) {
-        $prepare = $this->connexion->prepare('UPDATE users SET username=:username, password=:password, email=:email, grade=:grade, proprietaire=:proprietaire  WHERE id=:id');
+        $prepare = $this->connexion->prepare('UPDATE users SET username=:username, password=:password, email=:email, grade=:grade, proprietaire=:proprietaire, demandeProprietaire=:demandeProprietaire WHERE id=:id');
         $prepare->execute(array(
             "username" => $user->getUsername(),
             "password" => $user->getPassword(),
             "email" => $user->getEmail(),
             "grade" => $user->getGrade(),
             "id" => $user->getId(),
-            "proprietaire" => $user->getProprietaire()
+            "proprietaire" => $user->getProprietaire(),
+            "demandeProprietaire" => $user->getDemandeProprietaire()
         ));
         if($prepare->rowCount()>0) {
             return $prepare->rowCount();
@@ -105,6 +107,40 @@ class UserManager {
         }
         return false;
     }
+
+    public function countUsers() {
+        $prepare = $this->connexion->prepare('SELECT * FROM users');
+        $prepare->execute();
+        $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        if(!empty($result)) {
+            return count($result);
+        }
+        return "0";
+    }
+    public function countUsersNotValidated() {
+        $prepare = $this->connexion->prepare('SELECT * FROM users WHERE proprietaire=:proprietaire AND demandeProprietaire=:demandeProprietaire');
+        $prepare->execute(array(
+            "proprietaire" => "false",
+            "demandeProprietaire" => "true"
+        ));
+        $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        if(!empty($result)) {
+            return count($result);
+        }
+        return "0";
+    }
+
+    public function loadUsers() {
+        $prepare = $this->connexion->prepare('SELECT * FROM users');
+        $prepare->execute();
+        $users = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        $data = [];
+        foreach($users as $user) {
+            $data[] = new User($user);
+        }
+        return $data;
+    }
+
 }
 
 ?>

@@ -17,7 +17,7 @@
             }
             ?>
             <?php if(!isset($_SESSION['user'])) { ?> 
-            <form action="connect" method="post">
+            <form action="connect" method="post" class="col-md-5">
             <div class="form-group">
               <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter username">
             </div>

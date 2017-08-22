@@ -3,18 +3,16 @@
 class HTMLFormater {
     public function HTMLAnnonce(Annonce $annonce, $images) {
         if($annonce->getAccept() == "true") {
-            // echo '<div class="elem" style="height: 250px;margin:5px;background-image:url('.$images[0]->getLinkImage().');background-size:cover;border:1px solid gray;">
-            //     <h3>'.$annonce->getTitre().'</h3>
-            //     <p style="width:90%;padding:5px 10px;background-color: rgba(255,255,255,0.5);border-radius:4px;margin:auto;">
-            //         '.substr($annonce->getDescription(), 0, 110).'
-            //     </p>
-            //     <a href="'.Config::getURL('annonce/'.$annonce->getId()).'">Lire plus</a>
-            // </div>';
-            echo '<div class="elem" style="height: 250px;margin:5px;background-image:url('.$images[0]->getLinkImage().');background-size:cover;border:1px solid gray;">
-                <div class="col" style="width:100%;height:auto;min-height:10%;background-color:rgba(255,255,255,0.5);">'.$annonce->getTitre().'</div>
-                <div class="col" style="width:100%;height:auto;min-height:80%;font-size:16px;font-weight: bold;">'.substr($annonce->getDescription(), 0, 200).'</div>
-                <div class="col" style="width:100%;height:auto;min-height:10%;background-color:rgba(255,255,255,0.5);"><a href="'.Config::getURL('annonce/'.$annonce->getId()).'">Lire plus</a></div>
-            </div>';
+            echo '
+            <div class="card" style="width: 20rem;margin:20px;">
+            <img class="card-img-top" src="'.$images[0]->getLinkImage().'" style="width: 318px;height: 180px;" alt="Card image cap">
+            <div class="card-body">
+                <h4 class="card-title">'.$annonce->getTitre().'</h4>
+                <p class="card-text">'.substr($annonce->getDescription(), 0, 200).'</p>
+                <a href="'.Config::getURL('annonce/'.$annonce->getId()).'" class="btn btn-primary">Lire plus</a>
+            </div>
+            </div>
+            ';
         }
         return false;
     }
@@ -91,9 +89,18 @@ class HTMLFormater {
 
     public function displayError($array = array()) {
         if(!empty($array)) {
+            $data = '<div class="alert alert-danger col-md-11 d-block mx-auto" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+                <h4 class="alert-heading">Formulaire</h4>
+                <p>Erreur veuillez remplir les champs correctement</p>
+                <hr>';
             foreach($array as $error) {
-                return '<p>'.$error.'</p>';
+                $data .= '<p class="mb-0">'.$error.'</p>';
             }
+            $data .= '</div>';
+            return $data;
         }
         return false;
     }

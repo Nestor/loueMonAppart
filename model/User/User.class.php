@@ -9,6 +9,7 @@ class User {
 	private $dateInscription;
     private $locataire;
     private $proprietaire;
+    private $demandeProprietaire;
 
 	public function __construct($donnees=array()) {
         $this->hydrate($donnees);
@@ -22,6 +23,7 @@ class User {
 	public function getDateInscription() { return $this->dateInscription; }
     public function getLocataire() { return $this->locataire; }
     public function getProprietaire() { return $this->proprietaire; }
+    public function getDemandeProprietaire() { return $this->demandeProprietaire; }
 
     public function setId($id) { $this->id=$id; }
 	public function setUsername($username) { $this->username=$username; }
@@ -31,6 +33,7 @@ class User {
 	public function setDateInscription($dateInscription) { $this->dateInscription=$dateInscription; }
     public function setLocataire($locataire) { $this->locataire=$locataire; }
     public function setProprietaire($proprietaire) { $this->proprietaire=$proprietaire; }
+    public function setDemandeProprietaire($bool) { $this->demandeProprietaire=$bool; }
 
     public function hydrate(array $donneesTableau){
        if(empty($donneesTableau) == false){
@@ -70,6 +73,17 @@ class User {
 
     public function selectById(Bddmanager $BddManager) {
         return $BddManager->getUserManager()->getUserById($this);
+    }
+
+    public function countUsers(Bddmanager $BddManager) {
+        return $BddManager->getUserManager()->countUsers();
+    }
+    public function countUsersNotValidated(Bddmanager $BddManager) {
+        return $BddManager->getUserManager()->countUsersNotValidated();
+    }
+
+    public function loadAll(Bddmanager $BddManager) {
+        return $BddManager->getUserManager()->loadUsers();
     }
 
 }

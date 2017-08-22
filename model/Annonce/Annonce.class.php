@@ -71,5 +71,11 @@ class Annonce {
     public function update(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->updateAnnonce($this);
     }
+    public function countAnnoncesNotValidated(Bddmanager $BddManager) {
+        return $BddManager->getAnnonceManager()->countAnnoncesNotValidated();
+    }
+    public function countAnnoncesValidated(Bddmanager $BddManager) {
+        return $BddManager->getAnnonceManager()->countAnnoncesValidated();
+    }
 }
 ?>

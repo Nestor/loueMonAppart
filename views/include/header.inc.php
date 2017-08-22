@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="<?= Config::getURL() ?>styles/css/fonts.css" />
     <link rel="stylesheet" type="text/css" href="<?= Config::getURL() ?>styles/css/global.css" />
+    <link rel="stylesheet" type="text/css" href="<?= Config::getURL() ?>styles/css/font-awesome.min.css" />
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=lyjd13zu44fi96hxnzzrw8h66p8et8xppviovqhyun79on12"></script>
     <script>
         tinymce.init({

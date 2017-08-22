@@ -14,8 +14,10 @@
             <h2>Inscription</h2>
             <?php
             if(!empty($errors)) {
-                echo $errors.'<br/>';
+                echo Flight::HTMLFormater()->displayError($errors);
+
             }
+            
             if(isset($_GET['etat'])) {
                 switch($_GET['etat']) {
                     case "ok":
@@ -25,7 +27,7 @@
             }
             ?>
             
-            <form action="regist" method="post">
+            <form action="regist" method="post" class="col-md-5">
 
             <div class="form-group">
               <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter username">
