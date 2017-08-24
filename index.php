@@ -49,10 +49,17 @@ Flight::route('/annonce/@id', function($id){
     }
 });
 Flight::route('/location/@id', function($id){
-    Flight::render('location.view', array(
-        'id' => $id
-    ));
+    if(intval($id)) {
+        Flight::render('location.view', array(
+            'id' => $id
+        ));
+    } else if($id == "login") {
+        Flight::render('location-c.view', array());
+    } else {
+        Flight::redirect('/404');
+    }
 });
+
 Flight::route('/login', function(){
     Flight::render('login.view', array());
 });

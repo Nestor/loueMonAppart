@@ -36,6 +36,7 @@
             <?php 
             Flight::Image()->setIdAnnonce($annonce->getId());
             $images = Flight::Image()->getByAnnonceId(Flight::Bddmanager());
+
             echo Flight::HTMLFormater()->displaySlider($images);
             } ?>
         </div>

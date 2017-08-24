@@ -10,11 +10,15 @@
 
             <h2>Location</h2>
             vous souhaiter louer l'annonce <?= $id ?>
-                            
-            </div>
-            
-
-            
+            <div id="test"></div>
+            <div id="testIndep"></div>
+            <script type="text/javascript">
+                // var calendar = new Calendar('#test');
+            </script>
+            <?php 
+            setcookie("commandAnnonce", $id, time() + (86400 * 30));
+            // Flight::redirect(Config::getURL('location/login'));
+            ?>
         </div>
     </div>
 </div>

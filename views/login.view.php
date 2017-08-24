@@ -28,8 +28,7 @@
 
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input">
-                Se souvenir de moi ?
+                <a href="<?= Config::getURL('register') ?>">S'inscrire</a>
               </label>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
