@@ -5,9 +5,8 @@
 
     <script type="text/javascript">
         var calendar = new Calendar('#test', "100%", "auto");
-        // calendrier();
-        var calendar = new Calendar('#testIndep', "100%", "auto");
-        // writeCalendar();
+        var dateReserved = ["13/7/2017", "14/7/2017", "20/7/2017"];
+        calendar.remplir(dateReserved);
     </script>
 </body>
 </html>
