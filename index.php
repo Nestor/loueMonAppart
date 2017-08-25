@@ -9,7 +9,6 @@ AutoLoader::$displayInfo = false;
 AutoLoader::loadDir('configuration/', 'include');
 AutoLoader::loadDir('model/', 'require'); // On charge notre modules d'autoload de class (static)
 
-
 /*      CLASS INSTANCE        */
 Flight::register('Bddmanager', 'Bddmanager'); 
 Flight::register('HTMLFormater', 'HTMLFormater');
@@ -26,7 +25,16 @@ Flight::render('include/footer.inc', array(), 'footer_content');
 
 /*      ROUTING        */
 Flight::route('/', function(){
-    Flight::render('home.view', array("Bddmanager"=>Flight::Bddmanager()));
+    $AnnonceManager = Flight::Bddmanager()->getAnnonceManager();
+    $annonces = $AnnonceManager->getAnnonces();
+    $html = "";
+    foreach($annonces as $annonce) {
+        Flight::Annonce()->setId($annonce->getId());
+        Flight::Image()->setIdAnnonce($annonce->getId());
+        $images = Flight::Image()->getByAnnonceId(Flight::Bddmanager());
+        $html .= Flight::HTMLFormater()->displayAnnonce($annonce, $images);
+    }
+    Flight::render('home.view', array("annonces" => $html));
 });
 Flight::route('/post-annonce', function(){
 
@@ -43,9 +51,19 @@ Flight::route('/annonce', function(){
 });
 Flight::route('/annonce/@id', function($id){
     if(intval($id)) {
-        Flight::render('annonce.view', array(
-            'id' => $id
-        ));
+        Flight::Annonce()->setId($id);
+        Flight::Image()->setIdAnnonce($id);
+        $images = Flight::Image()->getByAnnonceId(Flight::Bddmanager());
+        $annonce = Flight::Annonce()->load(Flight::Bddmanager());
+        $html = "";
+        if(!empty($annonce)) {
+        Flight::Image()->setIdAnnonce($annonce->getId());
+        $images = Flight::Image()->getByAnnonceId(Flight::Bddmanager());
+
+        $html.=Flight::HTMLFormater()->displayViewAnnonce($annonce);
+        $html.=Flight::HTMLFormater()->displaySlider($images);
+        } 
+        Flight::render('annonce.view', array('annonce' => $html));
     }
 });
 Flight::route('/location/@id', function($id){
@@ -87,9 +105,9 @@ Flight::route('/admin', function(){
 Flight::route('/admin/annonces', function(){
     if(isset($_SESSION['user'])) {
         Flight::Utils()::getAdministrator($_SESSION['user']);
-        Flight::render('admin/annonces.view', array(
-            "annonces" => Flight::Annonce()->loadAll(Flight::Bddmanager())
-        ));
+        $annonces = Flight::Annonce()->loadAll(Flight::Bddmanager());
+        $html = Flight::HTMLFormater()->displayAdminAnnonce($annonces);
+        Flight::render('admin/annonces.view', array("annonces" => $html));
     }else{
         Flight::Utils()::getLogged();
     }
@@ -122,6 +140,31 @@ Flight::route('/admin/annonces-v', function(){
         Flight::render('admin/annonces-v.view', array(
             "annonces" => Flight::Annonce()->loadAll(Flight::Bddmanager())
         ));
+    }else{
+        Flight::Utils()::getLogged();
+    }
+});
+Flight::route('/admin/annonces-v/valide/@id', function($id){
+    if(isset($_SESSION['user'])) {
+        Flight::Utils()::getAdministrator($_SESSION['user']);
+        if(intval($id)) {
+            Flight::Annonce()->setId($id);
+            $annonce = Flight::Annonce()->load(Flight::Bddmanager());
+
+            Flight::Annonce()->setId($annonce->getId());
+            Flight::Annonce()->setTitre($annonce->getTitre());
+            Flight::Annonce()->setDescription($annonce->getDescription());
+            Flight::Annonce()->setDateDispo($annonce->getDateDispo());
+            Flight::Annonce()->setPlaceDispo($annonce->getPlaceDispo());
+            Flight::Annonce()->setPrice($annonce->getPrice());
+            Flight::Annonce()->setIdUser($annonce->getIdUser());
+            Flight::Annonce()->setAccept("true");
+            Flight::Annonce()->setDatePosted($annonce->getDatePosted());
+            Flight::Annonce()->setType($annonce->getType());
+            Flight::Annonce()->setLieu($annonce->getLieu());
+            var_dump(Flight::Annonce()->update(Flight::Bddmanager()));
+            Flight::redirect(Config::getURL('admin/annonces-v?etat=1'));
+        }
     }else{
         Flight::Utils()::getLogged();
     }
@@ -282,13 +325,13 @@ Flight::route('POST /annoncepost', function() {
         $errors['images'] = 'Veuillez uploader au moins une image';
     }
 
+    if(empty($request->data['lieu'])) {
+        $errors['lieu'] = 'Veuillez définir un lieu';
+    }
+
     // Soit on upload soit on affiche les erreurs
     if(!empty($errors)) {
-        $strErrors = "";
-        foreach($errors as $error) {
-            $strErrors .= $error.'<br/>';
-        }
-        Flight::render('postAnnonce.view', array('errors'=>$strErrors));
+        Flight::render('postAnnonce.view', array('errors'=>$errors));
     }else{
         Flight::Annonce()->setTitre($request->data['titre']);
         Flight::Annonce()->setDescription($request->data['description']);
@@ -296,6 +339,8 @@ Flight::route('POST /annoncepost', function() {
         Flight::Annonce()->setPlaceDispo($request->data['numberPlace']);
         Flight::Annonce()->setIdUser(unserialize($_SESSION['user'])->getId());
         Flight::Annonce()->setPrice($request->data['price']);
+        Flight::Annonce()->setType($request->data['type']);
+        Flight::Annonce()->setLieu($request->data['lieu']);
         $date=date('Y-m-d');
         Flight::Annonce()->setDatePosted($date);
         $annonceId = Flight::Annonce()->save(Flight::Bddmanager());
@@ -308,6 +353,11 @@ Flight::route('POST /annoncepost', function() {
 
         Flight::redirect(Config::getURL('?etat=ok'));
     }
+
+});
+Flight::route('POST /searchLieux', function() {
+    $request = Flight::request();
+    echo 'Vous rechercher une habitation vers '.$request->data['lieu'];
 
 });
 Flight::start();

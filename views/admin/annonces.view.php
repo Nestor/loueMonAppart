@@ -7,20 +7,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col" style="height: 50px;background-color: gray;"></div>
-    </div>
-    <div class="row">
         <div class="col containerParent">
             <h2>Liste des annonces</h2>
             <?php
                 if(isset($_GET['etat'])) {
                     switch($_GET['etat']) {
                         case "annonceDelete":
-                            echo 'L\'annonce à bien était supprimer';
+                            echo '<div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'annonce à bien était supprimer</div>';
                         break;
                     }
                 }
             ?>
+            
             <table class="table table-inverse">
                 <thead>
                     <tr>
@@ -33,28 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php
-                    if(!empty($annonces)) {
-                        foreach($annonces as $annonce) {
-                            if($annonce->getAccept() == "true") {
-                                echo '
-                                <tr>
-                                    <th scope="row">'.$annonce->getId().'</th>
-                                    <td><a href="'.Config::getURL('admin/annonce/'.$annonce->getId()).'">'.$annonce->getTitre().'</a></td>
-                                    <td>'.$annonce->getIdUser().'</td>
-                                    <td>'.$annonce->getPrice().'&euro; par nuit</td>
-                                    <td>'.$annonce->getDatePosted().'</td>
-                                    <td>
-                                        <a href="'.Config::getURL('admin/annonce/'.$annonce->getId()).'" class="btn btn-primary">Lire</a>
-                                        <a href="'.Config::getURL('admin/annonce/edit/'.$annonce->getId()).'" class="btn btn-primary">Editer</a>
-                                        <a href="'.Config::getURL('admin/annonce/delete/'.$annonce->getId()).'" class="btn btn-danger">Supprimer</a>
-                                    </td>
-                                </tr>
-                                ';
-                            }
-                        }
-                    }
-                ?>
+                <?= $annonces ?>
                 </tbody>
             </table>
         </div>

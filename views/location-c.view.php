@@ -11,6 +11,7 @@
             <?php
             if(isset($_COOKIE['commandAnnonce'])) {
                 var_dump($_COOKIE['commandAnnonce']);
+                var_dump($_COOKIE['dateReserved']);
             }
             ?>
             <div class="d-flex flex-wrap align-content-center justify-content-center">

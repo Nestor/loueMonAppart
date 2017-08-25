@@ -5,6 +5,7 @@ class Calendar {
         this.width = width;
         this.height = height;
         this.daysSelected = [];
+        // this.month = month;
         this.init();
     }
     remplir(arr) {
@@ -30,42 +31,33 @@ class Calendar {
         annee = data[2];
 
         if(day > date.getDate() && moi>=date.getMonth() && annee>=date.getFullYear()) {
-            console.log('ok');
-                if($(elem.target).attr("data-active") == "false") {
-                    $(elem.target).attr("data-active", "true")
-                    $(elem.target).css('background-color', 'yellow');
-                    this.daysSelected[$(elem.target).text()+"/"+moi+"/"+annee] = $(elem.target).html();
-                }else{
-                    $(elem.target).attr("data-active", "false")
-                    $(elem.target).css('background-color', 'transparent');
-                    delete this.daysSelected[$(elem.target).text()+"/"+moi+"/"+annee];
-                }
+            $(this.selector+" .log").text('');
+            if($(elem.target).attr("data-active") == "false") {
+                $(elem.target).attr("data-active", "true")
+                $(elem.target).css('background-color', 'yellow');
+                this.daysSelected.push($(elem.target).text()+"/"+moi+"/"+annee);
+            }else{
+                $(elem.target).attr("data-active", "false")
+                $(elem.target).css('background-color', 'transparent');
+                this.searhAndDelete($(elem.target).text()+"/"+moi+"/"+annee);
+            }
         } else {
-            console.log('Veuillez sélectionner un jour pas déjà passer');
+            $(this.selector+" .log").text('Veuillez sélectionner un(des) jour(s) à venir');
         }
         console.log(this.daysSelected);
-
-        // var date = new Date();
-        // if($(elem.target).text() > date.getDate() || moi < date.getMonth()) {
-        //     if($(elem.target).attr("data-active") == "false") {
-        //         $(elem.target).attr("data-active", "true")
-        //         $(elem.target).css('background-color', 'yellow');
-        //         this.daysSelected[$(elem.target).text()+"/"+moi+"/"+annee] = $(elem.target).html();
-        //     }else{
-        //         $(elem.target).attr("data-active", "false")
-        //         $(elem.target).css('background-color', 'transparent');
-        //         delete this.daysSelected[$(elem.target).text()+"/"+moi+"/"+annee];
-        //     }
-        //     console.log(this.daysSelected);
-        // } else {
-        //     console.log('Veuillez sélectionner un jour pas encore passer');
-        //     console.log($(elem.target).text()+"/"+moi+'/'+annee+"  =  "+date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear());
-        // }
+    }
+    searhAndDelete($days) {
+        for(var i=0;i<this.daysSelected.length;i++) {
+            if($days == this.daysSelected[i]) {
+                this.daysSelected.splice(i, 1);
+            }
+        }
     }
     init() {
         var date = new Date();
         var jour = date.getDate();
         var moi = date.getMonth();
+        // var moi = this.month;
         var annee = date.getYear();
         var html = "";
         if(annee<=200) {
@@ -87,7 +79,7 @@ class Calendar {
         }
         dep_j = dep_j.getDay();
 
-        html+='<table class="cal_calendrier" border=1><tbody id="cal_body"><tr><th colspan="7">'+date_aujourdui+'</th></tr>';
+        html+='<div class="log"></div><table class="cal_calendrier" border=1><tbody id="cal_body"><tr><th colspan="7">'+date_aujourdui+'</th></tr>';
         html+='<tr class="cal_j_semaines"><th>Dim</th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th></tr><tr>';
 
         var sem = 0;
@@ -120,7 +112,7 @@ class Calendar {
                 sem=0;
             }
         }
-        html+='</tbody></table>';
+        html+='</tbody></table><a href="#" class="btn btn-primary valider">Valider</a>';
         // return true;
         $(this.selector).html(html);
 
@@ -128,6 +120,21 @@ class Calendar {
         $(this.selector+" #cal_body tr td").click(function(elem) {
             that.click(elem, moi, annee);
         });
+        $(this.selector+" .valider").click(function() {
+            var a = document.cookie;
+            var b = a.split('; ');
+            var c = b[0].substr(b['0'].length-1);
+            // console.log("AnnonceID="+c);
+            
+            var donnees = "";
+            for(var i=0; i<that.daysSelected.length;i++) {
+                donnees+=that.daysSelected[i]+',';
+            }
+            document.cookie = "dateReserved="+donnees+";expires=Thu, 18 Dec 2018 12:00:00 UTC;path=/";
+            var f = document.cookie;
+            console.log(f);
+            window.location.replace("http://127.0.0.1/airbnb/location/login");
+    });
 
         $(this.selector+" .cal_calendrier").css("text-align", "center");
         $(this.selector+" .cal_aujourdhui").css({

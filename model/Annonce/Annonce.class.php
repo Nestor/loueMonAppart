@@ -1,5 +1,6 @@
 <?php
-class Annonce {
+require_once 'model/ClassModel.class.php';
+class Annonce extends ClassModel {
 
 	private $id;
 	private $titre;
@@ -10,10 +11,8 @@ class Annonce {
     private $idUser;
     private $accept;
     private $datePosted;
-
-    public function __construct($donnees=array()) {
-        $this->hydrate($donnees);
-    }
+    private $type;
+    private $lieu;
 
 	public function getId() { return $this->id; }
 	public function getTitre() { return $this->titre; }
@@ -24,6 +23,8 @@ class Annonce {
     public function getIdUser() { return $this->idUser; }
     public function getAccept() { return $this->accept; }
     public function getDatePosted() { return $this->datePosted; }
+    public function getType() { return $this->type; }
+    public function getLieu() { return $this->lieu; }
 
 
 	public function setId($id) { $this->id=$id; }
@@ -35,30 +36,13 @@ class Annonce {
     public function setIdUser($id) { $this->idUser=$id; }
     public function setAccept($bool) { $this->accept=$bool; }
     public function setDatePosted($date) { $this->datePosted=$date; }
-
-    public function hydrate(array $donneesTableau){
-       if(empty($donneesTableau) == false){
-            foreach ($donneesTableau as $key => $value){
-                $newString=$key;
-                if(preg_match("#_#",$key)){
-                    $word = explode("_",$key);
-                    $newString = "";
-                    foreach ($word as $w){
-                        $newString.=ucfirst($w);
-                    }
-                }
-                $method = "set".ucfirst($newString);
-                if(method_exists($this,$method)){
-                    $this->$method($value);
-                }
-            }
-        }
-    }
-
+    public function setType($type) { $this->type=$type; }
+    public function setLieu($lieu) { $this->lieu=$lieu; }
 
     public function load(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->getAnnonceById($this);
     }
+
     public function loadAll(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->getAnnonces();
     }

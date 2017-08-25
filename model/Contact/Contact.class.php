@@ -1,5 +1,6 @@
 <?php
-class Contact {
+require_once 'model/ClassModel.class.php';
+class Contact extends ClassModel {
 
     private $id;
     private $type;
@@ -7,10 +8,6 @@ class Contact {
     private $description;
     private $userId;
     private $date;
-
-    public function __construct($donnees=array()) {
-        $this->hydrate($donnees);
-    }
 
     public function getId(){ return $this->id; }
     public function getType(){ return $this->type; }
@@ -25,25 +22,6 @@ class Contact {
     public function setDescription($description){ $this->description=$description; }
     public function setUserId($userId){ $this->userId=$userId; }
     public function setDate($date){ $this->date=$date; }
-
-    public function hydrate(array $donneesTableau){
-       if(empty($donneesTableau) == false){
-            foreach ($donneesTableau as $key => $value){
-                $newString=$key;
-                if(preg_match("#_#",$key)){
-                    $word = explode("_",$key);
-                    $newString = "";
-                    foreach ($word as $w){
-                        $newString.=ucfirst($w);
-                    }
-                }
-                $method = "set".ucfirst($newString);
-                if(method_exists($this,$method)){
-                    $this->$method($value);
-                }
-            }
-        }
-    }
 
     public function loadById(Bddmanager $BddManager) {
         return $BddManager->getContactManager()->getContactById($this);

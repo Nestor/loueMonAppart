@@ -1,5 +1,6 @@
 <?php
-class User {
+require_once 'model/ClassModel.class.php';
+class User extends ClassModel {
 
     private $id;
 	private $username;
@@ -10,10 +11,6 @@ class User {
     private $locataire;
     private $proprietaire;
     private $demandeProprietaire;
-
-	public function __construct($donnees=array()) {
-        $this->hydrate($donnees);
-    }
 
     public function getId() { return $this->id; }
 	public function getUsername() { return $this->username; }
@@ -35,25 +32,6 @@ class User {
     public function setProprietaire($proprietaire) { $this->proprietaire=$proprietaire; }
     public function setDemandeProprietaire($bool) { $this->demandeProprietaire=$bool; }
 
-    public function hydrate(array $donneesTableau){
-       if(empty($donneesTableau) == false){
-            foreach ($donneesTableau as $key => $value){
-                $newString=$key;
-                if(preg_match("#_#",$key)){
-                    $word = explode("_",$key);
-                    $newString = "";
-                    foreach ($word as $w){
-                        $newString.=ucfirst($w);
-                    }
-                }
-                $method = "set".ucfirst($newString);
-                if(method_exists($this,$method)){
-                    $this->$method($value);
-                }
-            }
-        }
-    }
-
     public function save(Bddmanager $BddManager) {
         return $BddManager->getUserManager()->saveUser($this);
     }
@@ -67,10 +45,6 @@ class User {
         return $BddManager->getUserManager()->connectUser($this);
     }
 
-    // public function checkUserExist(Bddmanager $BddManager) {
-    //     return $BddManager->getUserManager()->checkUserExist($this);
-    // }
-
     public function selectById(Bddmanager $BddManager) {
         return $BddManager->getUserManager()->getUserById($this);
     }
@@ -78,6 +52,7 @@ class User {
     public function countUsers(Bddmanager $BddManager) {
         return $BddManager->getUserManager()->countUsers();
     }
+    
     public function countUsersNotValidated(Bddmanager $BddManager) {
         return $BddManager->getUserManager()->countUsersNotValidated();
     }

@@ -34,6 +34,18 @@
             </div>
 
             <div class="form-group">
+                <label for="inputType">Type</label>
+                <select name="type" id="inputType" class="form-control">
+                    <option value="house">Maison</option>
+                    <option value="appart">Appartement</option>
+                    <option value="cars">Roulotte, Caravane, Camping car</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inputLieu">Lieux: </label><input type="text" id="inputLieu" class="form-control" name="lieu" />
+            </div>
+
+            <div class="form-group">
                 <textarea class="form-control" name="description" placeholder="Description"></textarea>
             </div>
             

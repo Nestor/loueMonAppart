@@ -6,43 +6,27 @@
         </div>
     </div>
     <div class="row">
-        <div class="col" style="height: 50px;background-color: #fff;">
-            <?php
-                if(isset($_GET['etat'])) {
-                    switch($_GET['etat']) {
-                        case "ok":
-                            echo '
-                            <div class="alert alert-warning" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            Votre annonce à était poster veuillez patienter pendant qu\'un membre du staff valide votre annonce
-                            </div>
-                            ';
-                        break;
-                    }
-                }
-            ?>
+        <div class="col" style="height: auto;background-color: #fff;">
+            <button class="btn btn-primary searchType" data-search="all">All</button>
+            <button class="btn btn-primary searchType" data-search="house">Maison</button>
+            <button class="btn btn-primary searchType" data-search="appart">Appartement</button>
+            <button class="btn btn-primary searchType" data-search="cars">Roulotte, Caravane, Camping car</button>
+
+            <form action="searchLieux" method="post">
+                <input type="text" name="lieu" placeholder="Lieux"/>
+                <input type="submit" value="Rechercher" />
+            </form>
         </div>
     </div>
     <div class="row containerParent">
+        
         <div class="col">
             <h2>Logements</h2>
             <div class="d-flex flex-wrap align-content-center justify-content-center">
-            <?php
-                $AnnonceManager = $Bddmanager->getAnnonceManager();
-                $annonces = $AnnonceManager->getAnnonces();
-                foreach($annonces as $annonce) {
-                    Flight::Annonce()->setId($annonce->getId());
-                    Flight::Image()->setIdAnnonce($annonce->getId());
-                    $images = Flight::Image()->getByAnnonceId($Bddmanager);
-                    echo $HTMLFormater->HTMLAnnonce($annonce, $images);
-                }
+            <?=
+                $annonces;
             ?>
             </div>
-            
-
-            
         </div>
     </div>
 </div>

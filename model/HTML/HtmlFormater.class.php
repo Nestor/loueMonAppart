@@ -1,10 +1,11 @@
 <?php
 
 class HTMLFormater {
-    public function HTMLAnnonce(Annonce $annonce, $images) {
+    public function displayAnnonce(Annonce $annonce, $images) {
         if($annonce->getAccept() == "true") {
-            echo '
-            <div class="card" style="width: 20rem;margin:20px;">
+            $test = $annonce->getDescription();
+            return '
+            <div class="card item" data-type="'.$annonce->getType().'" style="width: 20rem;margin:20px;">
             <img class="card-img-top" src="'.$images[0]->getLinkImage().'" style="width: 318px;height: 180px;" alt="Card image cap">
             <div class="card-body">
                 <h4 class="card-title">'.$annonce->getTitre().'</h4>
@@ -15,6 +16,58 @@ class HTMLFormater {
             ';
         }
         return false;
+    }
+
+    public function displayViewAnnonce(Annonce $annonce) {
+        return '
+        <div class="jumbotron">
+            <h2 class="display-3">'.$annonce->getTitre().'</h2>
+            <p class="lead">'.$annonce->getDescription().'</p>
+            <div class="row">
+                <div class="col">
+                    <div class="card" style="width: 20rem;">
+                        <ul class="list-group list-group-flush"><li class="list-group-item">'.$annonce->getPrice().'&euro; par nuit</li></ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width: 20rem;">
+                        <ul class="list-group list-group-flush"><li class="list-group-item">'.$annonce->getPlaceDispo().' places</li></ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width: 20rem;">
+                        <ul class="list-group list-group-flush"><li class="list-group-item">Poster par '.$annonce->getIdUser().'</li></ul>
+                    </div>
+                </div>
+            </div>
+        </div><br/>
+        ';
+    }
+
+    public function displayAdminAnnonce(Array $annonces) {
+        $html = "";
+        if(!empty($annonces)) {
+            foreach($annonces as $annonce) {
+                if($annonce->getAccept() == "true") {
+                    $html.='
+                    <tr>
+                        <th scope="row">'.$annonce->getId().'</th>
+                        <td><a href="'.Config::getURL('admin/annonce/'.$annonce->getId()).'">'.$annonce->getTitre().'</a></td>
+                        <td>'.$annonce->getIdUser().'</td>
+                        <td>'.$annonce->getPrice().'&euro; par nuit</td>
+                        <td>'.$annonce->getDatePosted().'</td>
+                        <td>
+                        <a href="'.Config::getURL('admin/annonce/edit/'.$annonce->getId()).'" class="btn btn-primary">Editer</a>
+                        <a href="'.Config::getURL('admin/annonce/delete/'.$annonce->getId()).'" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                    ';
+                }
+            }
+            return $html;
+        }
     }
 
     public function displayMain($session=null) {
@@ -32,40 +85,37 @@ class HTMLFormater {
             }
 
 
-            $mainMenu .= '
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="'.Config::getURL().'">Mon Site</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="'.Config::getURL().'">Accueil <span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="'.Config::getURL('profil').'">Mon profil</a></li>';
-            
-                foreach($otherData as $linkMain) {
-                    $mainMenu .= $linkMain;
-                }
+                $mainMenu .= '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="'.Config::getURL().'">Mon Site</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="'.Config::getURL().'">Accueil <span class="sr-only">(current)</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="'.Config::getURL('profil').'">Mon profil</a></li>';
+                
+                    foreach($otherData as $linkMain) {
+                        $mainMenu .= $linkMain;
+                    }
 
-            $mainMenu .= '
-                <li class="nav-item"><a class="nav-link" href="'. Config::getURL('logout') .'">Se déconnecter</a></li>
-                <li class="nav-item"><a class="nav-link" href="'. Config::getURL('contact') .'">Nous contacter</a></li>
-            </ul>
-            <!--
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Destination" aria-label="Search">
-                <input class="form-control mr-sm-2" type="number" placeholder="Nombre de personnes" name="nbrPerson" min="1">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            -->
-            </div>
-            </nav>
-            ';
+                $mainMenu .= '
+                    <li class="nav-item"><a class="nav-link" href="'. Config::getURL('logout') .'">Se déconnecter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="'. Config::getURL('contact') .'">Nous contacter</a></li>
+                </ul>
+                <!--
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Destination" aria-label="Search">
+                    <input class="form-control mr-sm-2" type="number" placeholder="Nombre de personnes" name="nbrPerson" min="1">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                -->
+                </div>
+                </nav>';
             return $mainMenu;
         }
 
-        $mainMenu = '
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        $mainMenu = '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="'. Config::getURL() .'">Mon Site</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -82,8 +132,7 @@ class HTMLFormater {
             <input class="form-control mr-sm-2" type="number" placeholder="Nombre de personnes" name="nbrPerson" min="1">
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
         </form>
-        </div>
-    </nav>';
+        </div></nav>';
     return $mainMenu;
     }
 
@@ -106,33 +155,34 @@ class HTMLFormater {
     }
 
     public function displaySlider($images=array()) {
+        $slider = "";
         if(!empty($images)) {
-            echo '<div id="carouselExampleIndicators" class="carousel slide d-w" data-ride="carousel"><ol class="carousel-indicators">';
+            $slider.='<div id="carouselExampleIndicators" class="carousel slide d-w" data-ride="carousel"><ol class="carousel-indicators">';
             for($i=0;$i<count($images);$i++) {
                 if($i==0) {
-                    echo '<li data-target="#carouselExampleIndicators" data-slide-to="'.$i.'" class="active"></li>';
+                    $slider.='<li data-target="#carouselExampleIndicators" data-slide-to="'.$i.'" class="active"></li>';
                 } else {
-                    echo '<li data-target="#carouselExampleIndicators" data-slide-to="'.$i.'"></li>';
+                    $slider.='<li data-target="#carouselExampleIndicators" data-slide-to="'.$i.'"></li>';
                 }
             }
-            echo '</ol><div class="carousel-inner">';
+            $slider.='</ol><div class="carousel-inner">';
             for($i=0;$i<count($images);$i++) {
                 if($i==0) {
-                    echo '
+                    $slider.='
                     <div class="carousel-item active">
                         <img class="d-block w-100" src="'.$images[$i]->getLinkImage().'" alt="slide_img" style="height:500px;width:100%;">
                     </div>
                     ';
                 }else{
-                    echo '
+                    $slider.='
                     <div class="carousel-item">
                         <img class="d-block w-100" src="'.$images[$i]->getLinkImage().'" alt="slide_img" style="height:500px;width:100%;">
                     </div>
                     ';
                 }
             }
-            echo '</div>';
-            echo '
+            $slider.='</div>';
+            $slider.='
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -143,6 +193,7 @@ class HTMLFormater {
                 </a>
             </div>
             ';
+            return $slider;
         }
         return false;
     }

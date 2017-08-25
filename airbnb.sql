@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-08-21 16:56:25
+Date: 2017-08-25 17:02:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,15 +28,17 @@ CREATE TABLE `annonces` (
   `idUser` varchar(255) DEFAULT NULL,
   `accept` varchar(255) DEFAULT 'false',
   `datePosted` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `lieu` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of annonces
 -- ----------------------------
-INSERT INTO `annonces` VALUES ('1', 'Appt 50m2 ', 'ENGLISH SPEAKER. \r\nOne Bedroom apartment with rooftop and inflatable Jacuzzi. \r\nThe flat is new and well located.\r\nFeel free to message me.\r\n\r\nT2 50m2 avec un rooftop terrasse de 25m2 équipée d\'un Jacuzzi gonflable idéal pour se relaxer sous le soleil de ', '2017-08-18', '2', '55', '1', 'true', '21/08/2017');
-INSERT INTO `annonces` VALUES ('4', 'annonce de test', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque risus elit, eu interdum est malesuada vel. Donec quis volutpat purus. Mauris a mollis urna. Nunc tristique, augue sed eleifend bibendum, elit nibh imperdiet enim, eu dictu', '2017-08-21', '4', '55', '1', 'true', '2017-08-21');
-INSERT INTO `annonces` VALUES ('5', 'ctesqts', 'sqjdqsjdksqdkqdsqdl', '2017-08-21', '4', '35', '1', 'true', '2017-08-21');
+INSERT INTO `annonces` VALUES ('4', 'annonce de test', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque risus elit, eu interdum est malesuada vel. Donec quis volutpat purus. Mauris a mollis urna. Nunc tristique, augue sed eleifend bibendum, elit nibh imperdiet enim, eu dictu', '2017-08-21', '4', '55', '1', 'true', '2017-08-21', 'house', null);
+INSERT INTO `annonces` VALUES ('5', 'ctesqts', 'sqjdqsjdksqdkqdsqdl', '2017-08-21', '4', '35', '1', 'true', '2017-08-21', 'house', null);
+INSERT INTO `annonces` VALUES ('6', 'ceci est un test', '<p>&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&n', '2017-08-22', '1', '30', '1', 'true', '2017-08-22', 'appart', null);
 
 -- ----------------------------
 -- Table structure for `contact`
@@ -65,7 +67,7 @@ CREATE TABLE `images` (
   `idAnnonce` int(12) NOT NULL,
   `linkImage` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of images
@@ -78,6 +80,8 @@ INSERT INTO `images` VALUES ('5', '4', 'http://127.0.0.1/airbnb/uploads/appartem
 INSERT INTO `images` VALUES ('6', '4', 'http://127.0.0.1/airbnb/uploads/photo-635345462351547530-1.jpg');
 INSERT INTO `images` VALUES ('7', '5', 'http://127.0.0.1/airbnb/uploads/86d0db9b-7a05-4a1b-ab56-7c807923b8e9.jpg');
 INSERT INTO `images` VALUES ('8', '5', 'http://127.0.0.1/airbnb/uploads/cca7fe3c-28c9-432f-aff9-25d1132ee0b2.jpg');
+INSERT INTO `images` VALUES ('9', '6', 'http://127.0.0.1/airbnb/uploads/photo-635345462351547530-1.jpg');
+INSERT INTO `images` VALUES ('10', '7', 'http://127.0.0.1/airbnb/uploads/desktop.png');
 
 -- ----------------------------
 -- Table structure for `images_url`
@@ -106,10 +110,11 @@ CREATE TABLE `users` (
   `grade` varchar(255) DEFAULT NULL,
   `dateInscription` varchar(255) DEFAULT NULL,
   `proprietaire` varchar(255) DEFAULT NULL,
+  `demandeProprietaire` varchar(255) DEFAULT 'false',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'zoukilama', '353d196605b2bb5890bfb1b3aa0c3cccfdddd30bd033e22ae348aeb5660fc2140aec35850c4da997', 'zouki.dev@gmail.com', 'owner', '18/08/2017 à 18:47', 'true');
+INSERT INTO `users` VALUES ('1', 'zoukilama', '353d196605b2bb5890bfb1b3aa0c3cccfdddd30bd033e22ae348aeb5660fc2140aec35850c4da997', 'zouki.dev@gmail.com', 'owner', '18/08/2017 à 18:47', 'true', 'true');
