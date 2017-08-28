@@ -6,7 +6,7 @@ class HTMLFormater {
             $test = $annonce->getDescription();
             return '
             <div class="card item" data-type="'.$annonce->getType().'" style="width: 20rem;margin:20px;">
-            <img class="card-img-top" src="'.$images[0]->getLinkImage().'" style="width: 318px;height: 180px;" alt="Card image cap">
+            <img class="card-img-top" src="'.Config::getURL().$images[0]->getLinkImage().'" style="width: 318px;height: 180px;" alt="Card image cap">
             <div class="card-body">
                 <h4 class="card-title">'.$annonce->getTitre().'</h4>
                 <p class="card-text">'.substr($annonce->getDescription(), 0, 200).'</p>
@@ -170,13 +170,13 @@ class HTMLFormater {
                 if($i==0) {
                     $slider.='
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="'.$images[$i]->getLinkImage().'" alt="slide_img" style="height:500px;width:100%;">
+                        <img class="d-block w-100" src="'.Config::getURL().$images[$i]->getLinkImage().'" alt="slide_img" style="height:500px;width:100%;">
                     </div>
                     ';
                 }else{
                     $slider.='
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="'.$images[$i]->getLinkImage().'" alt="slide_img" style="height:500px;width:100%;">
+                        <img class="d-block w-100" src="'.Config::getURL().$images[$i]->getLinkImage().'" alt="slide_img" style="height:500px;width:100%;">
                     </div>
                     ';
                 }

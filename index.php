@@ -309,7 +309,7 @@ Flight::route('POST /annoncepost', function() {
 
                 if(in_array($extension_upload, $extention_autoriser)) {
                     move_uploaded_file($request->files['monfichier'.$i]['tmp_name'], 'uploads/'.basename($request->files['monfichier'.$i]['name']));
-                    $dataImage[] = Config::getURL().'uploads/'.$request->files['monfichier'.$i]['name'];
+                    $dataImage[] = 'uploads/'.$request->files['monfichier'.$i]['name'];
                 }else{
                     $errors['images'] = 'l\'extension du fichier n\'est pas autoriser: '.$request->files['monfichier'.$i]['name'];
                 }
