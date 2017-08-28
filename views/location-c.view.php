@@ -9,9 +9,28 @@
         <div class="col containerParent">
             <h2>Location</h2>
             <?php
-            if(isset($_COOKIE['commandAnnonce'])) {
-                var_dump($_COOKIE['commandAnnonce']);
-                var_dump($_COOKIE['dateReserved']);
+            if(isset($_SESSION['user'])){
+                if(isset($_COOKIE['commandAnnonce']) && isset($_COOKIE['dateReserved'])) {
+                    Flight::Annonce()->setId($_COOKIE['commandAnnonce']);
+                    $annonceLoadPrice = Flight::Annonce()->load(Flight::Bddmanager());
+                    $dataPrice = $annonceLoadPrice->getPrice();
+                    $reserved = rtrim($_COOKIE['dateReserved'], ',');
+                    $daysReserverd = explode(",", $reserved);
+                    $price = 0;
+
+                    echo 'Id: '.$_COOKIE['commandAnnonce'].'<br/>';
+                    echo 'Prix: '.$dataPrice.'&euro;<br/>';
+                    echo 'Jours réserver:<br/>';
+                    
+                    foreach($daysReserverd as $day) {
+                        echo $day.'<br/>';
+                        $price += $dataPrice;
+                    }
+                    echo 'Prix total: '.$price.'&euro;<br/>';
+                    echo '<a class="btn btn-primary" href="'.Config::getURL('paiement').'">Payer (valider)</a>';
+                }
+            } else {
+                echo 'Veuillez vous connecter pour finaliser la commande';
             }
             ?>
             <div class="d-flex flex-wrap align-content-center justify-content-center">
@@ -19,7 +38,7 @@
                 <?php if(!isset($_SESSION['user'])) { ?>
                 <div class="col-md-6" style="border-right: 1px solid gray;">
                 <h2>Se connecter</h2>
-                    <form action="<?= Config::getURL('POST connect') ?>" method="post">
+                    <form action="<?= Config::getURL('') ?>connect" method="post">
                         <div class="form-group">
                         <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter username">
                         </div>

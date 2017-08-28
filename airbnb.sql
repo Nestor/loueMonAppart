@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-08-25 17:02:41
+Date: 2017-08-28 17:06:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,9 +36,9 @@ CREATE TABLE `annonces` (
 -- ----------------------------
 -- Records of annonces
 -- ----------------------------
-INSERT INTO `annonces` VALUES ('4', 'annonce de test', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque risus elit, eu interdum est malesuada vel. Donec quis volutpat purus. Mauris a mollis urna. Nunc tristique, augue sed eleifend bibendum, elit nibh imperdiet enim, eu dictu', '2017-08-21', '4', '55', '1', 'true', '2017-08-21', 'house', null);
-INSERT INTO `annonces` VALUES ('5', 'ctesqts', 'sqjdqsjdksqdkqdsqdl', '2017-08-21', '4', '35', '1', 'true', '2017-08-21', 'house', null);
-INSERT INTO `annonces` VALUES ('6', 'ceci est un test', '<p>&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&n', '2017-08-22', '1', '30', '1', 'true', '2017-08-22', 'appart', null);
+INSERT INTO `annonces` VALUES ('4', 'annonce de test', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque risus elit, eu interdum est malesuada vel. Donec quis volutpat purus. Mauris a mollis urna. Nunc tristique, augue sed eleifend bibendum, elit nibh imperdiet enim, eu dictu', '2017-08-21', '4', '300', '1', 'true', '2017-08-21', 'house', 'Paris');
+INSERT INTO `annonces` VALUES ('5', 'ctesqts', 'sqjdqsjdksqdkqdsqdl', '2017-08-21', '4', '35', '1', 'true', '2017-08-21', 'house', 'dsqds');
+INSERT INTO `annonces` VALUES ('6', 'ceci est un test', '<p>&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&n', '2017-08-22', '1', '30', '1', 'true', '2017-08-22', 'appart', 'qdsdss');
 
 -- ----------------------------
 -- Table structure for `contact`
@@ -72,16 +72,16 @@ CREATE TABLE `images` (
 -- ----------------------------
 -- Records of images
 -- ----------------------------
-INSERT INTO `images` VALUES ('1', '1', 'http://127.0.0.1/airbnb/uploads/86d0db9b-7a05-4a1b-ab56-7c807923b8e9.jpg');
-INSERT INTO `images` VALUES ('2', '1', 'http://127.0.0.1/airbnb/uploads/afa0fe17-902f-424e-a71a-1e4573113a75.jpg');
-INSERT INTO `images` VALUES ('3', '1', 'http://127.0.0.1/airbnb/uploads/cca7fe3c-28c9-432f-aff9-25d1132ee0b2.jpg');
-INSERT INTO `images` VALUES ('4', '4', 'http://127.0.0.1/airbnb/uploads/4578956_9_b.jpg');
-INSERT INTO `images` VALUES ('5', '4', 'http://127.0.0.1/airbnb/uploads/appartement-t2-3-avec-terrasse-51.jpg');
-INSERT INTO `images` VALUES ('6', '4', 'http://127.0.0.1/airbnb/uploads/photo-635345462351547530-1.jpg');
-INSERT INTO `images` VALUES ('7', '5', 'http://127.0.0.1/airbnb/uploads/86d0db9b-7a05-4a1b-ab56-7c807923b8e9.jpg');
-INSERT INTO `images` VALUES ('8', '5', 'http://127.0.0.1/airbnb/uploads/cca7fe3c-28c9-432f-aff9-25d1132ee0b2.jpg');
-INSERT INTO `images` VALUES ('9', '6', 'http://127.0.0.1/airbnb/uploads/photo-635345462351547530-1.jpg');
-INSERT INTO `images` VALUES ('10', '7', 'http://127.0.0.1/airbnb/uploads/desktop.png');
+INSERT INTO `images` VALUES ('1', '1', 'uploads/86d0db9b-7a05-4a1b-ab56-7c807923b8e9.jpg');
+INSERT INTO `images` VALUES ('2', '1', 'uploads/afa0fe17-902f-424e-a71a-1e4573113a75.jpg');
+INSERT INTO `images` VALUES ('3', '1', 'uploads/cca7fe3c-28c9-432f-aff9-25d1132ee0b2.jpg');
+INSERT INTO `images` VALUES ('4', '4', 'uploads/4578956_9_b.jpg');
+INSERT INTO `images` VALUES ('5', '4', 'uploads/appartement-t2-3-avec-terrasse-51.jpg');
+INSERT INTO `images` VALUES ('6', '4', 'uploads/photo-635345462351547530-1.jpg');
+INSERT INTO `images` VALUES ('7', '5', 'uploads/86d0db9b-7a05-4a1b-ab56-7c807923b8e9.jpg');
+INSERT INTO `images` VALUES ('8', '5', 'uploads/cca7fe3c-28c9-432f-aff9-25d1132ee0b2.jpg');
+INSERT INTO `images` VALUES ('9', '6', 'uploads/photo-635345462351547530-1.jpg');
+INSERT INTO `images` VALUES ('10', '7', 'uploads/desktop.png');
 
 -- ----------------------------
 -- Table structure for `images_url`
@@ -117,4 +117,4 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'zoukilama', '353d196605b2bb5890bfb1b3aa0c3cccfdddd30bd033e22ae348aeb5660fc2140aec35850c4da997', 'zouki.dev@gmail.com', 'owner', '18/08/2017 à 18:47', 'true', 'true');
+INSERT INTO `users` VALUES ('1', 'zoukilama', '353d196605b2bb5890bfb1b3aa0c3cccfdddd30bd033e22ae348aeb5660fc2140aec35850c4da997', 'zouki.dev@gmail.com', 'owner', '18/08/2017 à 18:47', 'true', 'false');

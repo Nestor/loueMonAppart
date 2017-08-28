@@ -58,7 +58,7 @@
 
                     <div id="collapseSupport" class="collapse show" role="tabpanel" aria-labelledby="headingTree" data-parent="#accordion">
                         <div class="card-body">
-                            <a href="<?= Config::getURL('admin/message') ?>" class="btn btn-primary">Liste des messages <span class="badge badge-dark">0</span></a>
+                            <a href="<?= Config::getURL('admin/message') ?>" class="btn btn-primary disabled">Liste des messages <span class="badge badge-dark">0</span></a>
                         </div>
                     </div>
                 </div>

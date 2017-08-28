@@ -10,6 +10,7 @@
 
     <script type="text/javascript">
         var calendar = new Calendar('#test', '100%', "auto");
+        calendar.reserved();
     </script>
 </body>
 </html>

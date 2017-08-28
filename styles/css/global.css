@@ -1,6 +1,6 @@
 body {
     /* background-color: rgba(236, 240, 241,1.0); */
-    background-image: url('https://wallpaperscraft.com/image/city_night_cathedral_sky_view_from_top_russia_moscow_47874_1920x1080.jpg');
+    background-image: url('../images/background_01.jpg');
     background-size: cover;
 }
 .container {

@@ -9,12 +9,17 @@
     <div class="row">
         <div class="col containerParent">
             <h2>Liste des annonces</h2>
+
             <?php
                 if(isset($_GET['etat'])) {
                     switch($_GET['etat']) {
                         case "annonceDelete":
                             echo '<div class="alert alert-success" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'annonce à bien était supprimer</div>';
+                        break;
+                        case "1":
+                            echo '<div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'annonce à bien était modifier</div>';
                         break;
                     }
                 }

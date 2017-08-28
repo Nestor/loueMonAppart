@@ -58,7 +58,7 @@ class AnnonceManager {
             "idUser" => $annonce->getIdUser(),
             "datePosted" => $annonce->getDatePosted(),
             "type" => $annonce->GetType(),
-            "lieu" => $annonce->getLieux()
+            "lieu" => $annonce->getLieu()
         ));
         if($this->connexion->lastInsertId()>0) {
             return $this->connexion->lastInsertId();

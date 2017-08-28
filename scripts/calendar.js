@@ -130,7 +130,7 @@ class Calendar {
             for(var i=0; i<that.daysSelected.length;i++) {
                 donnees+=that.daysSelected[i]+',';
             }
-            document.cookie = "dateReserved="+donnees+";expires=Thu, 18 Dec 2018 12:00:00 UTC;path=/";
+            document.cookie = "dateReserved="+donnees+";expires=Thu, 18 Dec 2018 12:00:00 UTC";
             var f = document.cookie;
             console.log(f);
             window.location.replace("http://127.0.0.1/airbnb/location/login");

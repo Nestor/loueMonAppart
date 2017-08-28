@@ -7,9 +7,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col" style="height: 50px;background-color: gray;"></div>
-    </div>
-    <div class="row">
         <div class="col containerParent">
             <h2>Nous contacter</h2>
             <?php

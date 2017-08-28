@@ -61,7 +61,9 @@ Flight::route('/annonce/@id', function($id){
         $images = Flight::Image()->getByAnnonceId(Flight::Bddmanager());
 
         $html.=Flight::HTMLFormater()->displayViewAnnonce($annonce);
+        
         $html.=Flight::HTMLFormater()->displaySlider($images);
+        $html.='<a href="'.Config::getURL('location/'.$annonce->getId()).'" class="btn btn-lg btn-primary">Louer</a>';
         } 
         Flight::render('annonce.view', array('annonce' => $html));
     }
@@ -77,12 +79,44 @@ Flight::route('/location/@id', function($id){
         Flight::redirect('/404');
     }
 });
-
+Flight::route('/paiement', function(){
+    Flight::render('paiement.view', array());
+});
 Flight::route('/login', function(){
     Flight::render('login.view', array());
 });
 Flight::route('/profil', function(){
     Flight::render('profil.view', array());
+});
+Flight::route('/upgrade', function(){
+    if(isset($_SESSION['user'])) {
+        Flight::render('upgrade.view', array());
+    }else{
+        Flight::Utils()::getLogged();
+    }
+    
+});
+Flight::route('/upgrade/send', function(){
+    if(isset($_SESSION['user'])) {
+        $session = unserialize($_SESSION['user']);
+        if($session->getProprietaire() == "false" && $session->getDemandeProprietaire() == "false") {
+            $session->setUsername($session->getUsername());
+            $session->setPassword($session->getPassword());
+            $session->setEmail($session->getEmail());
+            $session->setGrade($session->getGrade());
+            $session->setDateInscription($session->getDateInscription());
+            $session->setproprietaire($session->getProprietaire());
+            $session->setDemandeProprietaire('true');
+            $session->update(Flight::Bddmanager());
+            Flight::redirect('upgrade?etat=1');
+        } else {
+            Flight::redirect(Config::getURL('upgrade?etat=2'));
+        }
+        
+    }else{
+        Flight::Utils()::getLogged();
+    }
+    
 });
 Flight::route('/register', function(){
     Flight::render('register.view', array());
@@ -199,7 +233,20 @@ Flight::route('/admin/users-v', function(){
         Flight::Utils()::getLogged();
     }
 });
-
+Flight::route('/admin/users-v/valide/@id', function($id){
+    echo 'Vous valider l\'utilisateur '.$id;
+    Flight::User()->setId($id);
+    $user=Flight::User()->selectById(Flight::Bddmanager());
+    Flight::User()->setUsername($user->getUsername());
+    Flight::User()->setPassword($user->getPassword());
+    Flight::User()->setEmail($user->getEmail());
+    Flight::User()->setGrade($user->getGrade());
+    Flight::User()->setDateInscription($user->getDateInscription());
+    Flight::User()->setProprietaire('true');
+    Flight::User()->setDemandeProprietaire('false');
+    Flight::User()->update(Flight::Bddmanager());
+    Flight::redirect(Config::getURL('admin/users-v?etat=1'));
+});
 Flight::map('notFound', function(){
     Flight::render('error404.view', array());
 });
@@ -220,15 +267,7 @@ Flight::route('POST /connect', function(){
     $errors;
 
     if(!empty($result)) {
-        // $_SESSION['user'] = array(
-        //     "id" => $result->getId(),
-        //     "username" => $result->getUsername(),
-        //     "grade" => $result->getGrade(),
-        //     "locataire" => $result->getLocataire(),
-        //     "proprietaire" => $result->getProprietaire()
-        // );
         $_SESSION['user'] = serialize($result);
-        // var_dump($_SESSION['user']);
         Flight::redirect('');
     } else {
         $errors['account'] = "Mauvais nom de compte ou mot de passe";
@@ -309,7 +348,7 @@ Flight::route('POST /annoncepost', function() {
 
                 if(in_array($extension_upload, $extention_autoriser)) {
                     move_uploaded_file($request->files['monfichier'.$i]['tmp_name'], 'uploads/'.basename($request->files['monfichier'.$i]['name']));
-                    $dataImage[] = Config::getURL().'uploads/'.$request->files['monfichier'.$i]['name'];
+                    $dataImage[] = 'uploads/'.$request->files['monfichier'.$i]['name'];
                 }else{
                     $errors['images'] = 'l\'extension du fichier n\'est pas autoriser: '.$request->files['monfichier'.$i]['name'];
                 }
@@ -359,6 +398,57 @@ Flight::route('POST /searchLieux', function() {
     $request = Flight::request();
     echo 'Vous rechercher une habitation vers '.$request->data['lieu'];
 
+});
+Flight::route('POST /annonceedit', function() {
+    $request = Flight::request();
+    // vérification du titre
+    if(strlen($request->data['titre']) < 4) {
+        $errors['titre'] = "Titre trop court";
+    } else if(strlen($request->data['titre']) > 100) {
+        $errors['titre'] = "Titre trop long";
+    }
+
+    // vérification de la description
+    if(strlen($request->data['description']) < 55) {
+        $errors['description'] = "Description trop court";
+    } else if(strlen($request->data['']) > 455) {
+        $errors['description'] = "Description trop long";
+    }
+
+    // vérification de la date (pas fini)
+    if(empty($request->data['dateDispo'])) {
+        $errors['dateDispo'] = "Veuillez saisir une date";
+    }
+
+    // vérification du nombre de places
+    if(intval($request->data['numberPlace']) <= 0) {
+        $errors['numberPlace'] = "Vous devez avoir au moins une place";
+    }
+
+    if(empty($request->data['lieu'])) {
+        $errors['lieu'] = 'Veuillez définir un lieu';
+    }
+
+    if(empty($request->data['type'])) {
+        $errors['type'] = 'Veuillez définir un lieu';
+    }
+
+    if(!empty($errors)) {
+        Flight::render('admin/annonce-e.view', array('errors'=>Flight::HTMLFormater()->displayError($errors)));
+    }else{
+        Flight::Annonce()->setId($request->data['id']);
+        Flight::Annonce()->setTitre($request->data['titre']);
+        Flight::Annonce()->setDescription($request->data['description']);
+        Flight::Annonce()->setDateDispo($request->data['dateDispo']);
+        Flight::Annonce()->setPlaceDispo($request->data['numberPlace']);
+        Flight::Annonce()->setPrice($request->data['price']);
+        Flight::Annonce()->setType($request->data['type']);
+        Flight::Annonce()->setLieu($request->data['lieu']);
+        Flight::Annonce()->setIdUser($request->data['idUser']);
+        Flight::Annonce()->setAccept($request->data['accept']);
+        Flight::Annonce()->update(Flight::Bddmanager());
+        Flight::redirect(Config::getURL('admin/annonces?etat=1'));
+    }
 });
 Flight::start();
 ?>

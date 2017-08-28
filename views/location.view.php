@@ -13,7 +13,7 @@
             <div id="test"></div>
             <div id="testIndep"></div>
             <?php 
-            setcookie("commandAnnonce", $id, time() + (86400 * 30));
+            setcookie("commandAnnonce", $id, time() + 3600, "/");
             // Flight::redirect(Config::getURL('location/login'));
             ?>
         </div>
