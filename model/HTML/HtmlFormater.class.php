@@ -69,75 +69,89 @@ class HTMLFormater {
             return $html;
         }
     }
-
+    
     public function displayMain($session=null) {
+        $html = "";
+        $htmlLinkTab = [];
         if(!empty($session)) {
-            $session = unserialize($session);
-            $otherData=[];
-            $mainMenu="";
-
+            $session=unserialize($session);
+            
             if($session->getProprietaire() == "true") {
-                $otherData[] = '<li class="nav-item"><a class="nav-link" href="'. Config::getURL('post-annonce') .'">Poster une annonce</a></li>';
+                $htmlLinkTab[] = '<li class="nav-item"><a class="nav-link" href="'. Config::getURL('post-annonce') .'">Poster une annonce</a></li>';
             }
 
             if($session->getGrade() == "owner") {
-                $otherData[] = '<li class="nav-item"><a class="nav-link" href="'. Config::getURL('admin') .'">Espace admin</a></li>';
+                $htmlLinkTab[] = '<li class="nav-item"><a class="nav-link" href="'. Config::getURL('admin') .'">Espace admin</a></li>';
             }
 
             if($session->getProprietaire() == "false" && $session->getDemandeProprietaire() == "false") {
-                $otherData[] = '<li class="nav-item"><a class="nav-link" href="'. Config::getURL('upgrade') .'">Upgrade</a></li>';
+                $htmlLinkTab[] = '<li class="nav-item"><a class="nav-link" href="'. Config::getURL('upgrade') .'">Upgrade</a></li>';
             }
 
-
-                $mainMenu .= '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="'.Config::getURL().'">Mon Site</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            $html.='
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <a class="navbar-brand" href="'.Config::getURL().'">Mon site</a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="'.Config::getURL().'">Accueil <span class="sr-only">(current)</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="'.Config::getURL('profil').'">Mon profil</a></li>';
-                
-                    foreach($otherData as $linkMain) {
-                        $mainMenu .= $linkMain;
-                    }
 
-                $mainMenu .= '
-                    <li class="nav-item"><a class="nav-link" href="'. Config::getURL('logout') .'">Se déconnecter</a></li>
-                    <li class="nav-item"><a class="nav-link" href="'. Config::getURL('contact') .'">Nous contacter</a></li>
-                </ul>
-                <!--
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Destination" aria-label="Search">
-                    <input class="form-control mr-sm-2" type="number" placeholder="Nombre de personnes" name="nbrPerson" min="1">
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                -->
+                <div class="navbar-collapse collapse" id="navbarColor02" style="">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link" href="'.Config::getURL().'">Accueil <span class="sr-only">(current)</span></a></li>';
+                        foreach($htmlLinkTab as $htmlLink) {
+                            $html.=$htmlLink;
+                        }
+            $html.='
+                        <li class="nav-item"><a class="nav-link" href="'.Config::getURL('profil').'">Mon profil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="'.Config::getURL('logout').'">Se déconnecter</a></li>
+                        <li class="nav-item"><a class="nav-link" href="'.Config::getURL('contact').'">Nous contacter</a></li>
+                    </ul>
+                    <span class="navbar-text">
+                        <div class="dropdown" style="margin-right:50px;">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                '.$session->getUsername().'
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding:5px;">
+                                <a href="'.Config::getURL('profil').'" class="btn">Mon profil</a>
+                                <a href="#" class="btn">Mon panier</a>
+                                <a href="'.Config::getURL('logout').'" class="btn">Se déconnecter</a>
+                            </div>
+                        </div>
+                    </span>
                 </div>
-                </nav>';
-            return $mainMenu;
-        }
+            </nav>
+            ';
 
-        $mainMenu = '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="'. Config::getURL() .'">Mon Site</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="'. Config::getURL() .'">Accueil <span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="'. Config::getURL('login') .'">Se connecter</a></li>
-            <li class="nav-item"><a class="nav-link" href="'. Config::getURL('register') .'">S\'inscrire</a></li>
-            <li class="nav-item"><a class="nav-link" href="'. Config::getURL('contact') .'">Nous contacter</a></li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Destination" aria-label="Search">
-            <input class="form-control mr-sm-2" type="number" placeholder="Nombre de personnes" name="nbrPerson" min="1">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        </div></nav>';
-    return $mainMenu;
+        } else {
+            $html.='
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <a class="navbar-brand" href="'.Config::getURL().'">Navbar</a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse" id="navbarColor02" style="">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="'.Config::getURL().'">Accueil <span class="sr-only">(current)</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="'.Config::getURL('login').'">Se connecter</a></li>
+                        <li class="nav-item"><a class="nav-link" href="'.Config::getURL('register').'">S\'inscrire</a></li>
+                        <li class="nav-item"><a class="nav-link" href="'.Config::getURL('contact').'">Nous contacter</a></li>
+                    </ul>
+                    <span class="navbar-text">
+                        <div class="dropdown" style="margin-right:50px;">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Mon panier
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding:5px;">
+                                <a href="'.Config::getURL('login').'">Veuillez vous connecter</a>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </nav>
+            ';
+        }
+        return $html;
     }
 
     public function displayError($array = array()) {

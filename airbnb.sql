@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-08-28 17:06:51
+Date: 2017-08-29 16:59:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,15 +30,37 @@ CREATE TABLE `annonces` (
   `datePosted` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `lieu` varchar(255) DEFAULT NULL,
+  `adresse` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of annonces
 -- ----------------------------
-INSERT INTO `annonces` VALUES ('4', 'annonce de test', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque risus elit, eu interdum est malesuada vel. Donec quis volutpat purus. Mauris a mollis urna. Nunc tristique, augue sed eleifend bibendum, elit nibh imperdiet enim, eu dictu', '2017-08-21', '4', '300', '1', 'true', '2017-08-21', 'house', 'Paris');
-INSERT INTO `annonces` VALUES ('5', 'ctesqts', 'sqjdqsjdksqdkqdsqdl', '2017-08-21', '4', '35', '1', 'true', '2017-08-21', 'house', 'dsqds');
-INSERT INTO `annonces` VALUES ('6', 'ceci est un test', '<p>&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&n', '2017-08-22', '1', '30', '1', 'true', '2017-08-22', 'appart', 'qdsdss');
+INSERT INTO `annonces` VALUES ('4', 'annonce de test testeeee', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse scelerisque risus elit, eu interdum est malesuada vel. Donec quis volutpat purus. Mauris a mollis urna. Nunc tristique, augue sed eleifend bibendum, elit nibh imperdiet enim, eu dictu', '2017-08-21', '4', '300', '1', 'true', '2017-08-21', 'house', 'paris', '1 Rue du Faubourg Saint-Honoré, Paris');
+INSERT INTO `annonces` VALUES ('5', 'ctesqts', 'sqjdqsjdksqdkqdsqdl', '2017-08-21', '4', '35', '1', 'true', '2017-08-21', 'house', 'perpignan', '1 Avenue du Général Guillaut, Perpignan');
+INSERT INTO `annonces` VALUES ('6', 'ceci est un test', '<p>&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&nbsp;&nbsp;lorem ipsum do lorem&n', '2017-08-22', '1', '30', '1', 'true', '2017-08-22', 'appart', 'perpignan', '10 Boulevard Anatole France, Perpignan');
+
+-- ----------------------------
+-- Table structure for `commandes`
+-- ----------------------------
+DROP TABLE IF EXISTS `commandes`;
+CREATE TABLE `commandes` (
+  `id` int(12) NOT NULL AUTO_INCREMENT,
+  `userId` int(12) DEFAULT NULL,
+  `annonceId` int(12) DEFAULT NULL,
+  `dateArriver` varchar(255) DEFAULT NULL,
+  `dateDepart` varchar(255) DEFAULT NULL,
+  `price` int(12) DEFAULT NULL,
+  `datePosted` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of commandes
+-- ----------------------------
+INSERT INTO `commandes` VALUES ('1', '1', '4', '2017-08-29', '2017-09-03', '0', '2017-08-29');
+INSERT INTO `commandes` VALUES ('2', '1', '4', '2017-08-29', '2017-09-02', '0', '2017-08-29');
 
 -- ----------------------------
 -- Table structure for `contact`
@@ -117,4 +139,4 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'zoukilama', '353d196605b2bb5890bfb1b3aa0c3cccfdddd30bd033e22ae348aeb5660fc2140aec35850c4da997', 'zouki.dev@gmail.com', 'owner', '18/08/2017 à 18:47', 'true', 'false');
+INSERT INTO `users` VALUES ('1', 'zoukilama', '353d196605b2bb5890bfb1b3aa0c3cccfdddd30bd033e22ae348aeb5660fc2140aec35850c4da997', 'zouki.dev@gmail.com', 'user', '18/08/2017 à 18:47', 'true', 'false');

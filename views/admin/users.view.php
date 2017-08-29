@@ -2,11 +2,6 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12" style="padding: 0;">
-            <?= $main_content ?>
-        </div>
-    </div>
-    <div class="row">
         <div class="col containerParent">
             <h2>Liste des utilisateurs</h2>
             <table class="table table-inverse">

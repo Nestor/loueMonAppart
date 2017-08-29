@@ -28,3 +28,10 @@
     <title><?= $title ?></title>
 </head>
 <body>
+<?php
+if(isset($_SESSION['user'])) {
+    echo Flight::HTMLFormater()->displayMain($_SESSION['user']);
+}else{
+    echo Flight::HTMLFormater()->displayMain();
+}
+?>

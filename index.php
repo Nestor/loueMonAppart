@@ -18,9 +18,10 @@ Flight::register('AnnonceManager', 'AnnonceManager');
 Flight::register('ImageManager', 'ImageManager');
 Flight::register('Image', 'Image');
 Flight::register('Utils', 'Utils');
+Flight::register('Command', 'Command');
+Flight::register('CommandManager', 'CommandManager');
 
 Flight::render('include/header.inc', array('title' => Config::$SITE_NAME), 'header_content');
-Flight::render('include/main.inc', array('HTMLFormater' => Flight::HTMLFormater()), 'main_content');
 Flight::render('include/footer.inc', array(), 'footer_content');
 
 /*      ROUTING        */
@@ -63,21 +64,27 @@ Flight::route('/annonce/@id', function($id){
         $html.=Flight::HTMLFormater()->displayViewAnnonce($annonce);
         
         $html.=Flight::HTMLFormater()->displaySlider($images);
-        $html.='<a href="'.Config::getURL('location/'.$annonce->getId()).'" class="btn btn-lg btn-primary">Louer</a>';
-        } 
+        $html.='
+        <iframe frameborder="0" style="width:100%;height: 300px;border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCsWmEqmCc8uaTZ4M-1WGD_4e-VpXD4eg0
+        &q='.ucfirst($annonce->getAdresse()).','.ucfirst($annonce->getLieu()).'
+        &zoom=20
+        &maptype=satellite" allowfullscreen></iframe>
+        ';
+        if(isset($_SESSION['user'])) {
+            $html.='<a href="'.Config::getURL('location/'.$annonce->getId()).'" class="btn btn-lg btn-primary">Louer</a>';
+        } else {
+            $html.='<a href="'.Config::getURL('login').'" class="btn btn-lg btn-primary disabled">Veuillez vous connecter</a>';
+        }
+        
+        }
         Flight::render('annonce.view', array('annonce' => $html));
     }
 });
 Flight::route('/location/@id', function($id){
-    if(intval($id)) {
-        Flight::render('location.view', array(
-            'id' => $id
-        ));
-    } else if($id == "login") {
-        Flight::render('location-c.view', array());
-    } else {
-        Flight::redirect('/404');
-    }
+    Flight::render('location.view', array(
+        'id' => $id
+    ));
 });
 Flight::route('/paiement', function(){
     Flight::render('paiement.view', array());
@@ -367,7 +374,9 @@ Flight::route('POST /annoncepost', function() {
     if(empty($request->data['lieu'])) {
         $errors['lieu'] = 'Veuillez définir un lieu';
     }
-
+    if(empty($request->data['adresse'])) {
+        $errors['adresse'] = 'Veuillez définir une adresse';
+    }
     // Soit on upload soit on affiche les erreurs
     if(!empty($errors)) {
         Flight::render('postAnnonce.view', array('errors'=>$errors));
@@ -379,7 +388,8 @@ Flight::route('POST /annoncepost', function() {
         Flight::Annonce()->setIdUser(unserialize($_SESSION['user'])->getId());
         Flight::Annonce()->setPrice($request->data['price']);
         Flight::Annonce()->setType($request->data['type']);
-        Flight::Annonce()->setLieu($request->data['lieu']);
+        Flight::Annonce()->setLieu(mb_strtolower($request->data['lieu']));
+        Flight::Annonce()->setAdresse(mb_strtolower($request->data['adresse']));
         $date=date('Y-m-d');
         Flight::Annonce()->setDatePosted($date);
         $annonceId = Flight::Annonce()->save(Flight::Bddmanager());
@@ -396,7 +406,23 @@ Flight::route('POST /annoncepost', function() {
 });
 Flight::route('POST /searchLieux', function() {
     $request = Flight::request();
-    echo 'Vous rechercher une habitation vers '.$request->data['lieu'];
+    Flight::Annonce()->setLieu(mb_strtolower($request->data['lieu']));
+    $result = Flight::Annonce()->loadAllByLieu(Flight::Bddmanager());
+    if(!empty($result)) {
+        // var_dump($result);
+        $html = "";
+        foreach($result as $annonce) {
+            Flight::Annonce()->setId($annonce->getId());
+            Flight::Image()->setIdAnnonce($annonce->getId());
+            $images = Flight::Image()->getByAnnonceId(Flight::Bddmanager());
+            $html .= Flight::HTMLFormater()->displayAnnonce($annonce, $images);
+        }
+        Flight::render('home-search.view', array("annonces" => $html, "search"=>$request->data['lieu']));
+    } else {
+        echo 'Aucun résultat';
+    }
+    
+    // echo 'Vous rechercher une habitation vers '.$request->data['lieu'];
 
 });
 Flight::route('POST /annonceedit', function() {
@@ -443,12 +469,41 @@ Flight::route('POST /annonceedit', function() {
         Flight::Annonce()->setPlaceDispo($request->data['numberPlace']);
         Flight::Annonce()->setPrice($request->data['price']);
         Flight::Annonce()->setType($request->data['type']);
-        Flight::Annonce()->setLieu($request->data['lieu']);
+        Flight::Annonce()->setLieu(mb_strtolower($request->data['lieu']));
         Flight::Annonce()->setIdUser($request->data['idUser']);
         Flight::Annonce()->setAccept($request->data['accept']);
         Flight::Annonce()->update(Flight::Bddmanager());
         Flight::redirect(Config::getURL('admin/annonces?etat=1'));
     }
+});
+Flight::route('POST /command', function() {
+    $request = Flight::request();
+
+    if(empty($request->data['date_arriver'])) {
+        $errors['date_arriver'] = "Veuillez saisir une date d'arriver";
+    }
+    if(empty($request->data['date_depart'])) {
+        $errors['date_depart'] = "Veuillez saisir une date de départ";
+    }
+
+    if(!empty($errors)) {
+        foreach($errors as $error) {
+            echo $error.'<br/>';
+            Flight::redirect(Config::getURL('paiement?etat=2'));
+        }
+    } else {
+        $session = unserialize($_SESSION['user']);
+        Flight::Command()->setUserId($session->getId());
+        Flight::Command()->setAnnonceId($request->data['annonceId']);
+        Flight::Command()->setDateArriver($request->data['date_arriver']);
+        Flight::Command()->setDateDepart($request->data['date_depart']);
+        Flight::Command()->setPrice(0);
+        $date = date('Y-m-d');
+        Flight::Command()->setDatePosted($date);
+        Flight::Command()->save(Flight::Bddmanager());
+        Flight::redirect(Config::getURL('paiement?etat=1'));
+    }
+    
 });
 Flight::start();
 ?>

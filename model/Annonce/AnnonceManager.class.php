@@ -20,6 +20,19 @@ class AnnonceManager {
         // return new Annonce($result[0]);
     }
 
+    public function getAnnoncesByLieu(Annonce $annonce) {
+        $prepare = $this->connexion->prepare('SELECT * FROM annonces WHERE lieu=:lieu');
+        $prepare->execute(array(
+            "lieu" => $annonce->getLieu()
+        ));
+        $annonces = $prepare->fetchAll(PDO::FETCH_ASSOC);
+        $data = [];
+        foreach($annonces as $annonce) {
+            $data[] = new Annonce($annonce);
+        }
+        return $data;
+    }
+
     /* Pour sélectionner qu'une annonce */
     public function getAnnonceById(Annonce $annonce) {
         $prepare = $this->connexion->prepare('SELECT * FROM annonces WHERE id=:id');
@@ -48,7 +61,7 @@ class AnnonceManager {
 
     /* Pour enregistrer l'annonce */
     public function saveAnnonce(Annonce $annonce) {
-        $prepare = $this->connexion->prepare('INSERT INTO annonces SET titre=:titre, description=:description, dateDispo=:dateDispo, placeDispo=:placeDispo, price=:price, idUser=:idUser, datePosted=:datePosted, type=:type, lieu=:lieu');
+        $prepare = $this->connexion->prepare('INSERT INTO annonces SET titre=:titre, description=:description, dateDispo=:dateDispo, placeDispo=:placeDispo, price=:price, idUser=:idUser, datePosted=:datePosted, type=:type, lieu=:lieu, adresse=:adresse');
         $prepare->execute(array(
             "titre" => $annonce->getTitre(),
             "description" => $annonce->getDescription(),
@@ -58,7 +71,8 @@ class AnnonceManager {
             "idUser" => $annonce->getIdUser(),
             "datePosted" => $annonce->getDatePosted(),
             "type" => $annonce->GetType(),
-            "lieu" => $annonce->getLieu()
+            "lieu" => $annonce->getLieu(),
+            "adresse" => $annonce->getAdresse()
         ));
         if($this->connexion->lastInsertId()>0) {
             return $this->connexion->lastInsertId();
@@ -68,7 +82,7 @@ class AnnonceManager {
 
     /* Pour mettre à jours l'annonce */
     public function updateAnnonce(Annonce $annonce) {
-        $prepare = $this->connexion->prepare('UPDATE annonces SET titre=:titre, description=:description, dateDispo=:dateDispo, placeDispo=:placeDispo, price=:price, idUser=:idUser, accept=:accept, type=:type, lieu=:lieu WHERE id=:id');
+        $prepare = $this->connexion->prepare('UPDATE annonces SET titre=:titre, description=:description, dateDispo=:dateDispo, placeDispo=:placeDispo, price=:price, idUser=:idUser, accept=:accept, type=:type, lieu=:lieu, adresse=:adresse WHERE id=:id');
         $prepare->execute(array(
             "id" => $annonce->getId(),
             "titre" => $annonce->getTitre(),
@@ -79,7 +93,8 @@ class AnnonceManager {
             "idUser" => $annonce->getIdUser(),
             "accept" => $annonce->getAccept(),
             "type" => $annonce->GetType(),
-            "lieu" => $annonce->getLieu()
+            "lieu" => $annonce->getLieu(),
+            "adresse" => $annonce->getAdresse()
         ));
         if($prepare->rowCount()>0) {
             return $prepare->rowCount();

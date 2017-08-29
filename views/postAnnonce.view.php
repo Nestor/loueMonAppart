@@ -2,14 +2,6 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12" style="padding: 0;">
-            <?= $main_content ?>
-        </div>
-    </div>
-    <!-- <div class="row">
-        <div class="col" style="height: 50px;background-color: gray;"></div>
-    </div> -->
-    <div class="row">
         <div class="col containerParent">
             <h2>Annonce</h2>
             <?php
@@ -42,7 +34,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="inputLieu">Lieux: </label><input type="text" id="inputLieu" class="form-control" name="lieu" />
+                <label for="inputLieu">Ville: </label><input type="text" id="inputLieu" class="form-control" name="lieu" />
+            </div>
+
+            <div class="form-group">
+                <label for="inputAddr">Adresse: (ex: 10 rue de la Capital)</label><input type="text" class="form-control" id="inputAddr" name="addresse"/>
             </div>
 
             <div class="form-group">

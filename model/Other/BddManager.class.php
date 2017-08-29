@@ -6,6 +6,7 @@ class Bddmanager {
     private $UserManager;
     private $ImageManager;
     private $ContactManager;
+    private $CommandManager;
 
 	public function __construct() {
         $this->connexion = Connexion::getConnexion();
@@ -13,6 +14,7 @@ class Bddmanager {
         $this->setUserManager(new UserManager($this->connexion));
         $this->setImageManager(new ImageManager($this->connexion));
         $this->setContactManager(new ContactManager($this->connexion));
+        $this->setCommandManager(new CommandManager($this->connexion));
     }
 
     // Annonce
@@ -24,8 +26,11 @@ class Bddmanager {
     // Image
     public function getImageManager() { return $this->ImageManager; }
     public function setImageManager($ImageManager) { $this->ImageManager=$ImageManager;}
-    // Contatc
+    // Contact
     public function getContactManager() { return $this->ContactManager; }
     public function setContactManager($ContactManager) { $this->ContactManager=$ContactManager; }
+    // Commande
+    public function getCommandManager() { return $this->CommandManager; }
+    public function setCommandManager($CommandManager) { $this->CommandManager=$CommandManager; }
 }
 ?>

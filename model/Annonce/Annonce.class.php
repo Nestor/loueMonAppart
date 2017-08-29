@@ -13,6 +13,7 @@ class Annonce extends ClassModel {
     private $datePosted;
     private $type;
     private $lieu;
+    private $adresse;
 
 	public function getId() { return $this->id; }
 	public function getTitre() { return $this->titre; }
@@ -25,7 +26,7 @@ class Annonce extends ClassModel {
     public function getDatePosted() { return $this->datePosted; }
     public function getType() { return $this->type; }
     public function getLieu() { return $this->lieu; }
-
+    public function getAdresse() { return $this->adresse; }
 
 	public function setId($id) { $this->id=$id; }
 	public function setTitre($titre) { $this->titre=$titre; }
@@ -38,6 +39,7 @@ class Annonce extends ClassModel {
     public function setDatePosted($date) { $this->datePosted=$date; }
     public function setType($type) { $this->type=$type; }
     public function setLieu($lieu) { $this->lieu=$lieu; }
+    public function setAdresse($addr) { $this->adresse=$addr; }
 
     public function load(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->getAnnonceById($this);
@@ -46,6 +48,10 @@ class Annonce extends ClassModel {
     public function loadAll(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->getAnnonces();
     }
+    public function loadAllByLieu(Bddmanager $BddManager) {
+        return $BddManager->getAnnonceManager()->getAnnoncesByLieu($this);
+    }
+
     public function save(Bddmanager $BddManager) {
         return $BddManager->getAnnonceManager()->saveAnnonce($this);
     }
